@@ -13,7 +13,7 @@ interface BookingDetails {
 
 // Direct WhatsApp message service (no API required)
 export class EmailService {
-  private static readonly ADMIN_PHONE = '+918471909282'; // Admin phone number with country code
+  private static readonly ADMIN_PHONE = '918471909282'; // Admin phone number with country code
 
   static async sendBookingConfirmation(booking: BookingDetails): Promise<void> {
     console.log('📱 Starting WhatsApp message sending process...');
@@ -69,7 +69,7 @@ export class EmailService {
       const encodedMessage = encodeURIComponent(message);
       
       // Create WhatsApp URL
-      const whatsappUrl = `https://wa.me/${fullPhoneNumber.replace('+', '')}?text=${encodedMessage}`;
+      const whatsappUrl = `https://wa.me/${fullPhoneNumber.replace('+', this.ADMIN_PHONE)}?text=${encodedMessage}`;
       
       console.log('📱 WhatsApp Message Details:');
       console.log('📞 To:', fullPhoneNumber);
@@ -94,46 +94,44 @@ export class EmailService {
     const startDate = booking.startDate.toLocaleDateString();
     const endDate = booking.endDate.toLocaleDateString();
     
-    return `🛵 *SunRide Rentals - Booking Confirmed!*
-
-Dear ${booking.userName},
-
-Your scooty booking has been confirmed successfully! 
+    return `🛵 *Hi! I want this bike*
 
 📋 *Booking Details:*
-• Booking ID: ${booking.id}
-• Scooty: ${booking.bikeName} (${booking.bikeCategory})
-• Duration: ${startDate} to ${endDate}
-• Total Price: ₹${booking.totalPrice}
+• Bike: ${booking.bikeName}
+• Dates: ${startDate} to ${endDate}
+• Price: ₹${booking.totalPrice}
 
-💳 *Payment:* Please complete payment at pickup time.
+❓ *What should I bring?*
+📸 Valid ID proof
+📱 This booking confirmation
+💰 Payment amount
 
-📍 *Pickup:* Bring valid ID and this confirmation.
+📍 Ready for pickup! See you soon! 🎯
 
-Thank you for choosing SunRide Rentals! 🛵
-
-For any queries: Call us at +91 9876543210`;
+SunRide Rentals 🛵`;
   }
 
   private static generateAdminWhatsAppMessage(booking: BookingDetails): string {
     const startDate = booking.startDate.toLocaleDateString();
     const endDate = booking.endDate.toLocaleDateString();
     
-    return `🚨 *New Booking Alert - SunRide Rentals*
+    return `🚨 *New Bike Rental Request!*
 
-👤 *Customer Information:*
+👤 *Customer Info:*
 • Name: ${booking.userName}
 • Email: ${booking.userEmail}
 • Phone: ${booking.userPhone}
 
 🛵 *Booking Details:*
-• Booking ID: ${booking.id}
-• Scooty: ${booking.bikeName} (${booking.bikeCategory})
-• Duration: ${startDate} to ${endDate}
-• Total Price: ₹${booking.totalPrice}
+• Bike: ${booking.bikeName}
+• Dates: ${startDate} to ${endDate}
+• Price: ₹${booking.totalPrice}
+• Status: Ready for pickup
 
-⏰ *Booked on:* ${booking.createdAt.toLocaleDateString()}
+⏰ Booked: ${booking.createdAt.toLocaleDateString()}
 
-Please check admin dashboard for more details.`;
+📞 Customer wants to know what to bring for pickup!
+
+Please check dashboard for details.`;
   }
 }

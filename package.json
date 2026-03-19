@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
+    "start": "npm run build && concurrently \"npm run server\" \"vite preview --port 4173\"",
     "lint": "eslint .",
     "server": "node src/backend/server.js",
     "dev:full": "concurrently \"npm run server\" \"npm run dev\""

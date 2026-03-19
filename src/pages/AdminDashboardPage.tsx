@@ -8,16 +8,10 @@ import {
   IndianRupee,
   LogOut,
   CheckCircle,
-  XCircle,
   Clock,
-  AlertCircle,
   Ban,
   Check,
-  X,
   Search,
-  Filter,
-  ChevronDown,
-  ChevronUp,
   Plus,
   Trash2,
 } from 'lucide-react';
@@ -95,20 +89,6 @@ export function AdminDashboardPage() {
     } catch (error) {
       console.error('❌ Failed to update booking status:', error);
       alert('Failed to update status');
-    }
-  };
-
-  const handleDeleteBooking = async (bookingId: string) => {
-    if (!confirm('Are you sure you want to delete this booking?')) return;
-    try {
-      await adminAPI.deleteBooking(bookingId);
-      const updatedBookings = await adminAPI.getAllBookings();
-      setBookings(updatedBookings);
-      const updatedStats = await adminAPI.getStats();
-      setStats(updatedStats);
-    } catch (error) {
-      console.error('❌ Failed to delete booking:', error);
-      alert('Failed to delete booking');
     }
   };
 

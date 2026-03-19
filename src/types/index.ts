@@ -18,7 +18,7 @@ export interface Scooty {
 export interface Bike {
   id: string;
   name: string;
-  category: 'scooter' | 'motorcycle' | 'sports' | 'cruiser';
+  category: string;
   pricePerDay: number;
   image: string;
   description: string;

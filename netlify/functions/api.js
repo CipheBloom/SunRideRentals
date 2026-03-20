@@ -42,7 +42,7 @@ const VehicleSchema = new mongoose.Schema({
 const Vehicle = mongoose.model('Vehicle', VehicleSchema);
 
 // API Routes
-app.get('/api/vehicles', async (req, res) => {
+app.get('/vehicles', async (req, res) => {
   try {
     const vehicles = await Vehicle.find();
     res.json(vehicles);
@@ -52,7 +52,4 @@ app.get('/api/vehicles', async (req, res) => {
 });
 
 // Export as Netlify Function
-const handler = serverless(app);
-module.exports.handler = async (event, context) => {
-  return await handler(event, context);
-};
+module.exports.handler = serverless(app);

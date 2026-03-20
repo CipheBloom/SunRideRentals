@@ -22,6 +22,7 @@ function getGravatarUrl(email: string): string {
 
 export function Navbar() {
   const { user, isAuthenticated, logout } = useAuth();
+  console.log('🔍 Navbar - isAuthenticated:', isAuthenticated, 'isRider:', user?.isRider);
   const navigate = useNavigate();
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isAnimating, setIsAnimating] = useState(false);

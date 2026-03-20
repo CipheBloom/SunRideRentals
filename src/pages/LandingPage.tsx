@@ -138,7 +138,7 @@ export function LandingPage() {
         </div>
       </section>
 
-      {/* CTA Section */}
+      {/* CTA Section
       <section className="py-16 md:py-24 bg-blue-500">
         <div className="container px-4 md:px-6">
           <div className="flex flex-col items-center space-y-4 text-center text-white">
@@ -160,7 +160,7 @@ export function LandingPage() {
             )}
           </div>
         </div>
-      </section>
+      </section> */}
 
       {/* Footer */}
       <footer className="border-t bg-gray-50 py-8">

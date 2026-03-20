@@ -233,10 +233,16 @@ exports.handler = async (event, context) => {
       const applications = await RiderApplication.find().lean();
       console.log(`✅ Found ${applications.length} rider applications in database`);
       
+      // Ensure each application has an id field
+      const applicationsWithId = applications.map(app => ({
+        ...app,
+        id: app.id || app._id?.toString() || `app_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`
+      }));
+      
       return {
         statusCode: 200,
         headers,
-        body: JSON.stringify(applications, null, 2),
+        body: JSON.stringify(applicationsWithId, null, 2),
       };
     }
     
@@ -260,13 +266,19 @@ exports.handler = async (event, context) => {
       }
       
       // Create rider application in MongoDB
+      const applicationId = applicationData.id || `rider_app_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;
       const application = new RiderApplication({
         ...applicationData,
+        id: applicationId,
         createdAt: new Date(),
       });
       
       await application.save();
       console.log('✅ Rider application created in MongoDB:', application.id);
+      
+      // Ensure the returned object has the id field
+      const appObj = application.toObject();
+      appObj.id = appObj.id || applicationId;
       
       return {
         statusCode: 200,

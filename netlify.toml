@@ -37,20 +37,20 @@
   to = "/.netlify/functions/stats"
   status = 200
 
-# Admin endpoints - all pointing to simple-test for now
+# Admin endpoints - pointing to individual functions
 [[redirects]]
   from = "/api/bookings"
-  to = "/.netlify/functions/simple-test"
+  to = "/.netlify/functions/bookings"
   status = 200
 
 [[redirects]]
   from = "/api/users"
-  to = "/.netlify/functions/simple-test"
+  to = "/.netlify/functions/users"
   status = 200
 
 [[redirects]]
   from = "/api/rider-applications"
-  to = "/.netlify/functions/simple-test"
+  to = "/.netlify/functions/rider-applications"
   status = 200
 
 [[redirects]]

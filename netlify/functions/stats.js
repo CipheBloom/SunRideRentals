@@ -3,26 +3,20 @@ const mongoose = require('mongoose');
 // MongoDB Connection
 const MONGO_URI = process.env.MONGO_URI;
 
-if (!MONGO_URI) {
-  console.error('❌ MONGO_URI not set');
-  return {
-    statusCode: 500,
-    headers: {
-      'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': '*',
-    },
-    body: JSON.stringify({ error: 'MONGO_URI not configured' }),
-  };
-}
-
 let isConnected = false;
 
 const connectDB = async () => {
-  if (!isConnected) {
-    await mongoose.connect(MONGO_URI);
-    isConnected = true;
-    console.log('✅ MongoDB Connected');
+  if (!isConnected && MONGO_URI) {
+    try {
+      await mongoose.connect(MONGO_URI);
+      isConnected = true;
+      console.log('✅ MongoDB Connected');
+    } catch (error) {
+      console.error('❌ MongoDB Connection Error:', error);
+      return false;
+    }
   }
+  return isConnected;
 };
 
 // Schemas
@@ -98,13 +92,41 @@ const RiderApplication = mongoose.model('RiderApplication', RiderApplicationSche
 
 exports.handler = async (event, context) => {
   try {
-    await connectDB();
+    const dbConnected = await connectDB();
+    
+    if (!dbConnected) {
+      // Return mock data if MongoDB is not connected
+      const mockStats = {
+        totalBookings: 0,
+        totalUsers: 0,
+        totalVehicles: 0,
+        totalRiderApplications: 0,
+        activeBookings: 0,
+        completedBookings: 0,
+        cancelledBookings: 0,
+        pendingRiderApplications: 0,
+        approvedRiderApplications: 0,
+        rejectedRiderApplications: 0,
+        availableVehicles: 0,
+        unavailableVehicles: 0,
+        totalRiders: 0,
+      };
+      
+      return {
+        statusCode: 200,
+        headers: {
+          'Content-Type': 'application/json',
+          'Access-Control-Allow-Origin': '*',
+        },
+        body: JSON.stringify(mockStats, null, 2),
+      };
+    }
     
     const [bookings, users, vehicles, riderApplications] = await Promise.all([
-      Booking.find(),
-      User.find(),
-      Vehicle.find(),
-      RiderApplication.find()
+      Booking.find().lean(),
+      User.find().lean(),
+      Vehicle.find().lean(),
+      RiderApplication.find().lean()
     ]);
     
     const stats = {

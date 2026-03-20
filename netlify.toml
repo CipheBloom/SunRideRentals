@@ -79,6 +79,16 @@
   status = 200
 
 [[redirects]]
+  from = "/api/test-simple"
+  to = "/.netlify/functions/simple-test"
+  status = 200
+
+[[redirects]]
+  from = "/api/bookings"
+  to = "/.netlify/functions/mock-bookings"
+  status = 200
+
+[[redirects]]
   from = "/api/test-all"
   to = "/.netlify/functions/test-all"
   status = 200

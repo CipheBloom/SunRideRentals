@@ -128,7 +128,15 @@ export function ProfilePage() {
 
               {/* User Info */}
               <div className="flex-1 text-center md:text-left">
-                <h1 className="text-2xl font-bold">{user?.name}</h1>
+                <div className="flex items-center justify-center md:justify-start gap-3">
+                  <h1 className="text-2xl font-bold">{user?.name}</h1>
+                  {user?.isRider && (
+                    <span className="inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold bg-gradient-to-r from-green-500 to-emerald-600 text-white shadow-lg border-2 border-green-400">
+                      <Bike className="w-4 h-4 mr-1" />
+                      Rider
+                    </span>
+                  )}
+                </div>
                 <div className="flex items-center justify-center md:justify-start gap-2 mt-2 text-gray-500">
                   <Mail className="w-4 h-4" />
                   <span>{user?.email}</span>

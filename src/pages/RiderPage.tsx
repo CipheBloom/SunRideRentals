@@ -1,5 +1,5 @@
 import { useAuth } from '@/contexts/AuthContext';
-import { Navigate } from 'react-router-dom';
+import { Navigate, Link } from 'react-router-dom';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Bike, DollarSign, Star } from 'lucide-react';
 
@@ -14,9 +14,9 @@ export function RiderPage() {
     return (
       <div className="container py-12 text-center">
         <p className="text-gray-500 mb-4">You are not approved as a rider yet.</p>
-        <a href="/rider-apply" className="text-blue-500 hover:underline">
+        <Link to="/rider-apply" className="text-blue-500 hover:underline">
           Apply to become a rider
-        </a>
+        </Link>
       </div>
     );
   }

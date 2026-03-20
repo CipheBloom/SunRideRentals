@@ -66,7 +66,7 @@ export function ProfilePage() {
   if (!isAuthenticated) {
     return (
       <div className="container py-12 text-center">
-        <p className="text-gray-500 mb-4">Please sign in to view your profile</p>
+        <p className="text-slate-400 mb-4">Please sign in to view your profile</p>
         <Button onClick={() => navigate('/login')}>Sign In</Button>
       </div>
     );
@@ -118,10 +118,10 @@ export function ProfilePage() {
   const activeBookings = bookings.filter(b => b.status === 'confirmed').length;
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-8 px-4 md:px-6">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-950 py-8 px-4 md:px-6">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Profile Header - Modern Glassmorphism */}
-        <Card className="overflow-hidden border-0 shadow-xl shadow-slate-200/50 bg-white">
+        <Card className="overflow-hidden border-0 shadow-xl shadow-slate-900/50 bg-slate-800">
           <div className="h-32 bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600"></div>
           <CardContent className="p-6 -mt-16">
             <div className="flex flex-col md:flex-row items-center gap-6">
@@ -145,7 +145,7 @@ export function ProfilePage() {
               {/* User Info */}
               <div className="flex-1 text-center md:text-left pt-2 md:pt-16">
                 <div className="flex items-center justify-center md:justify-start gap-3 flex-wrap">
-                  <h1 className="text-2xl font-bold text-slate-900">{user?.name}</h1>
+                  <h1 className="text-2xl font-bold text-white">{user?.name}</h1>
                   {user?.isRider ? (
                     <span className="inline-flex items-center px-4 py-1.5 rounded-full text-sm font-semibold bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-lg shadow-emerald-500/30">
                       <Bike className="w-4 h-4 mr-1.5" />
@@ -166,7 +166,7 @@ export function ProfilePage() {
                     </span>
                   ) : null}
                 </div>
-                <div className="flex items-center justify-center md:justify-start gap-2 mt-2 text-slate-500">
+                <div className="flex items-center justify-center md:justify-start gap-2 mt-2 text-slate-400">
                   <Mail className="w-4 h-4" />
                   <span>{user?.email}</span>
                 </div>
@@ -197,81 +197,81 @@ export function ProfilePage() {
 
         {/* Stats - Modern Gradient Cards */}
         <div className="grid gap-4 md:grid-cols-3">
-          <Card className="border-0 shadow-lg shadow-blue-200/50 overflow-hidden">
+          <Card className="border-0 shadow-lg shadow-blue-900/50 overflow-hidden bg-slate-800">
             <div className="h-1 bg-gradient-to-r from-blue-500 to-blue-600"></div>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600">Total Bookings</CardTitle>
-              <div className="p-2 rounded-lg bg-blue-50">
-                <Bike className="h-4 w-4 text-blue-600" />
+              <CardTitle className="text-sm font-medium text-slate-300">Total Bookings</CardTitle>
+              <div className="p-2 rounded-lg bg-blue-900/50">
+                <Bike className="h-4 w-4 text-blue-400" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-slate-900">{bookings.length}</div>
-              <p className="text-xs text-slate-500 mt-1">All time bookings</p>
+              <div className="text-3xl font-bold text-white">{bookings.length}</div>
+              <p className="text-xs text-slate-400 mt-1">All time bookings</p>
             </CardContent>
           </Card>
           
-          <Card className="border-0 shadow-lg shadow-emerald-200/50 overflow-hidden">
+          <Card className="border-0 shadow-lg shadow-emerald-900/50 overflow-hidden bg-slate-800">
             <div className="h-1 bg-gradient-to-r from-emerald-500 to-teal-600"></div>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600">Active Rentals</CardTitle>
-              <div className="p-2 rounded-lg bg-emerald-50">
-                <Calendar className="h-4 w-4 text-emerald-600" />
+              <CardTitle className="text-sm font-medium text-slate-300">Active Rentals</CardTitle>
+              <div className="p-2 rounded-lg bg-emerald-900/50">
+                <Calendar className="h-4 w-4 text-emerald-400" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-slate-900">{activeBookings}</div>
-              <p className="text-xs text-slate-500 mt-1">Currently active</p>
+              <div className="text-3xl font-bold text-white">{activeBookings}</div>
+              <p className="text-xs text-slate-400 mt-1">Currently active</p>
             </CardContent>
           </Card>
           
-          <Card className="border-0 shadow-lg shadow-purple-200/50 overflow-hidden">
+          <Card className="border-0 shadow-lg shadow-purple-900/50 overflow-hidden bg-slate-800">
             <div className="h-1 bg-gradient-to-r from-purple-500 to-violet-600"></div>
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium text-slate-600">Total Spent</CardTitle>
-              <div className="p-2 rounded-lg bg-purple-50">
-                <IndianRupee className="h-4 w-4 text-purple-600" />
+              <CardTitle className="text-sm font-medium text-slate-300">Total Spent</CardTitle>
+              <div className="p-2 rounded-lg bg-purple-900/50">
+                <IndianRupee className="h-4 w-4 text-purple-400" />
               </div>
             </CardHeader>
             <CardContent>
-              <div className="text-3xl font-bold text-slate-900">₹{totalSpent}</div>
-              <p className="text-xs text-slate-500 mt-1">Lifetime spending</p>
+              <div className="text-3xl font-bold text-white">₹{totalSpent}</div>
+              <p className="text-xs text-slate-400 mt-1">Lifetime spending</p>
             </CardContent>
           </Card>
         </div>
 
         {/* Profile Details */}
-        <Card>
+        <Card className="bg-slate-800 border-slate-700">
           <CardHeader>
-            <CardTitle>Profile Information</CardTitle>
+            <CardTitle className="text-white">Profile Information</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {isEditing ? (
               <div className="space-y-4">
                 <div>
-                  <label className="text-sm font-medium">Phone Number</label>
+                  <label className="text-sm font-medium text-slate-300">Phone Number</label>
                   <div className="flex items-center gap-2 mt-1">
-                    <Phone className="w-4 h-4 text-gray-400" />
+                    <Phone className="w-4 h-4 text-slate-400" />
                     <input
                       type="tel"
                       ref={phoneInputRef}
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+91 98765 43210"
-                      className="flex-1 p-2 border rounded-md"
+                      className="flex-1 p-2 border border-slate-600 bg-slate-700 text-white rounded-md"
                     />
                   </div>
                 </div>
                 <div>
-                  <label className="text-sm font-medium">Address</label>
+                  <label className="text-sm font-medium text-slate-300">Address</label>
                   <div className="flex items-start gap-2 mt-1">
-                    <MapPin className="w-4 h-4 text-gray-400 mt-2" />
+                    <MapPin className="w-4 h-4 text-slate-400 mt-2" />
                     <textarea
                       value={address}
                       onChange={(e) => setAddress(e.target.value)}
                       placeholder="Enter your address"
                       rows={3}
-                      className="flex-1 p-2 border rounded-md"
+                      className="flex-1 p-2 border border-slate-600 bg-slate-700 text-white rounded-md"
                     />
                   </div>
                 </div>
@@ -288,17 +288,17 @@ export function ProfilePage() {
             ) : (
               <div className="space-y-4">
                 <div className="flex items-center gap-3">
-                  <Phone className="w-5 h-5 text-gray-400" />
+                  <Phone className="w-5 h-5 text-slate-400" />
                   <div>
-                    <p className="text-sm text-gray-500">Phone</p>
-                    <p className="font-medium">{phone || 'Not added'}</p>
+                    <p className="text-sm text-slate-400">Phone</p>
+                    <p className="font-medium text-white">{phone || 'Not added'}</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-3">
-                  <MapPin className="w-5 h-5 text-gray-400 mt-1" />
+                  <MapPin className="w-5 h-5 text-slate-400 mt-1" />
                   <div>
-                    <p className="text-sm text-gray-500">Address</p>
-                    <p className="font-medium">{address || 'Not added'}</p>
+                    <p className="text-sm text-slate-400">Address</p>
+                    <p className="font-medium text-white">{address || 'Not added'}</p>
                   </div>
                 </div>
               </div>
@@ -307,37 +307,37 @@ export function ProfilePage() {
         </Card>
 
         {/* Recent Bookings */}
-        <Card>
+        <Card className="bg-slate-800 border-slate-700">
           <CardHeader>
-            <CardTitle>Recent Bookings</CardTitle>
+            <CardTitle className="text-white">Recent Bookings</CardTitle>
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <p className="text-gray-500 text-center py-4">Loading bookings...</p>
+              <p className="text-slate-400 text-center py-4">Loading bookings...</p>
             ) : bookings.length === 0 ? (
-              <p className="text-gray-500 text-center py-4">No bookings yet</p>
+              <p className="text-slate-400 text-center py-4">No bookings yet</p>
             ) : (
               <div className="space-y-3">
                 {bookings.slice(0, 3).map((booking) => {
                   const canCancel = booking.status === 'confirmed' || booking.status === 'pending';
                   return (
-                    <div key={booking.id} className="flex items-center gap-4 p-3 bg-muted rounded-lg">
-                      <div className="w-16 h-12 bg-gray-200 rounded flex items-center justify-center">
-                        <Bike className="w-6 h-6 text-gray-400" />
+                    <div key={booking.id} className="flex items-center gap-4 p-3 bg-slate-700 rounded-lg">
+                      <div className="w-16 h-12 bg-slate-600 rounded flex items-center justify-center">
+                        <Bike className="w-6 h-6 text-slate-400" />
                       </div>
                       <div className="flex-1">
-                        <p className="font-medium">{booking.vehicleName || 'Unknown Vehicle'}</p>
-                        <p className="text-sm text-gray-500">
+                        <p className="font-medium text-white">{booking.vehicleName || 'Unknown Vehicle'}</p>
+                        <p className="text-sm text-slate-400">
                           {new Date(booking.startDate).toLocaleDateString()} - {new Date(booking.endDate).toLocaleDateString()}
                         </p>
                       </div>
                       <div className="text-right flex flex-col items-end gap-1">
-                        <p className="font-semibold">₹{booking.totalPrice}</p>
+                        <p className="font-semibold text-white">₹{booking.totalPrice}</p>
                         <span className={`text-xs px-2 py-1 rounded ${
-                          booking.status === 'confirmed' ? 'bg-green-100 text-green-800' :
-                          booking.status === 'pending' ? 'bg-yellow-100 text-yellow-800' :
-                          booking.status === 'cancelled' ? 'bg-red-100 text-red-800' :
-                          'bg-gray-100 text-gray-800'
+                          booking.status === 'confirmed' ? 'bg-green-900/50 text-green-300' :
+                          booking.status === 'pending' ? 'bg-yellow-900/50 text-yellow-300' :
+                          booking.status === 'cancelled' ? 'bg-red-900/50 text-red-300' :
+                          'bg-slate-600 text-slate-300'
                         }`}>
                           {booking.status}
                         </span>

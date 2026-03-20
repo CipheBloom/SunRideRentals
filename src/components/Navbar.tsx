@@ -67,7 +67,7 @@ export function Navbar() {
 
   return (
     <>
-      <nav className="sticky top-0 z-50 w-full border-b border-transparent md:border-b md:bg-background bg-white">
+      <nav className="sticky top-0 z-50 w-full border-b border-slate-800 bg-slate-950/95 backdrop-blur-sm">
         <div className="container flex h-14 items-center">
           <Link to="/" className="mr-6 flex items-center space-x-2">
             <img 
@@ -75,7 +75,7 @@ export function Navbar() {
               alt="SunRide Rentals"
               className="h-8 w-auto max-h-8"
             />
-            <span className="hidden font-bold sm:inline-block">
+            <span className="hidden font-bold sm:inline-block text-white">
               SunRide Rentals
             </span>
           </Link>
@@ -83,27 +83,27 @@ export function Navbar() {
           {/* Desktop Navigation */}
           <div className="hidden md:flex flex-1 items-center justify-between">
             <div className="hidden md:flex items-center space-x-6">
-              <Link to="/" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+              <Link to="/" className="text-slate-300 hover:text-white font-medium transition-colors">
                 Home
               </Link>
-              <Link to="/scooty" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+              <Link to="/scooty" className="text-slate-300 hover:text-white font-medium transition-colors">
                 Scootys
               </Link>
               {/* Show "Become a Rider" only if not authenticated or not a rider */}
               {(!isAuthenticated || !user?.isRider) && (
-                <Link to="/rider-apply" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+                <Link to="/rider-apply" className="text-slate-300 hover:text-white font-medium transition-colors">
                   Become a Rider
                 </Link>
               )}
               {/* Show "Rider" link if user is a rider */}
               {isAuthenticated && user?.isRider && (
-                <Link to="/rider" className="text-gray-700 hover:text-blue-600 font-medium transition-colors flex items-center gap-1">
-                  <Bike className="w-4 h-4 text-green-600" />
+                <Link to="/rider" className="text-slate-300 hover:text-white font-medium transition-colors flex items-center gap-1">
+                  <Bike className="w-4 h-4 text-green-400" />
                   Rider
                 </Link>
               )}
               {isAuthenticated && (
-                <Link to="/profile" className="text-gray-700 hover:text-blue-600 font-medium transition-colors">
+                <Link to="/profile" className="text-slate-300 hover:text-white font-medium transition-colors">
                   Profile
                 </Link>
               )}
@@ -121,7 +121,7 @@ export function Navbar() {
                         (e.target as HTMLImageElement).src = `https://ui-avatars.com/api/?name=${encodeURIComponent(user?.name || 'User')}&size=64&background=f97316&color=fff`;
                       }}
                     />
-                    <span className="text-sm font-medium">{user?.name}</span>
+                    <span className="text-sm font-medium text-slate-200">{user?.name}</span>
                   </Link>
                   <Button
                     variant="ghost"
@@ -165,10 +165,10 @@ export function Navbar() {
         />
         
         {/* Menu Panel */}
-        <div className={`absolute top-0 right-0 h-full w-80 max-w-full bg-white shadow-2xl transform transition-all duration-300 ease-in-out ${isAnimating ? 'translate-x-full' : 'translate-x-0'}`}>
+        <div className={`absolute top-0 right-0 h-full w-80 max-w-full bg-slate-900 shadow-2xl transform transition-all duration-300 ease-in-out ${isAnimating ? 'translate-x-full' : 'translate-x-0'}`}>
           <div className="flex flex-col h-full">
             {/* Menu Header */}
-            <div className="flex items-center p-4 border-b bg-gradient-to-r from-blue-500 to-blue-600 text-white">
+            <div className="flex items-center p-4 border-b border-slate-700 bg-gradient-to-r from-blue-600 to-blue-700 text-white">
               <div className="flex items-center gap-3">
                 <img 
                   src="/logo.jpg"
@@ -181,7 +181,7 @@ export function Navbar() {
 
             {/* User Profile Section */}
             {isAuthenticated && (
-              <div className="p-4 border-b bg-gradient-to-r from-blue-50 to-blue-100">
+              <div className="p-4 border-b border-slate-700 bg-gradient-to-r from-slate-800 to-slate-700">
                 <div className="flex items-center gap-3">
                   <img
                     src={user?.picture || (user?.email ? getGravatarUrl(user.email) : '')}
@@ -192,8 +192,8 @@ export function Navbar() {
                     }}
                   />
                   <div>
-                    <p className="font-semibold text-gray-900">{user?.name}</p>
-                    <p className="text-sm text-gray-600">{user?.email}</p>
+                    <p className="font-semibold text-white">{user?.name}</p>
+                    <p className="text-sm text-slate-300">{user?.email}</p>
                   </div>
                 </div>
               </div>
@@ -205,31 +205,31 @@ export function Navbar() {
                 <Link
                   to="/"
                   onClick={handleMenuItemClick}
-                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 transition-all duration-200 group"
+                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition-all duration-200 group"
                 >
-                  <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center group-hover:bg-blue-200 transition-colors">
-                    <Home className="h-5 w-5 text-blue-600" />
+                  <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center group-hover:bg-slate-600 transition-colors">
+                    <Home className="h-5 w-5 text-blue-400" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-gray-900">Home</p>
-                    <p className="text-sm text-gray-500">Return to homepage</p>
+                    <p className="font-medium text-white">Home</p>
+                    <p className="text-sm text-slate-400">Return to homepage</p>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                  <ChevronRight className="h-5 w-5 text-slate-500 group-hover:text-blue-400 transition-colors" />
                 </Link>
 
                 <Link
                   to="/scooty"
                   onClick={handleMenuItemClick}
-                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-orange-50 transition-all duration-200 group"
+                  className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition-all duration-200 group"
                 >
-                  <div className="w-10 h-10 rounded-full bg-orange-100 flex items-center justify-center group-hover:bg-orange-200 transition-colors">
-                    <Bike className="h-5 w-5 text-orange-600" />
+                  <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center group-hover:bg-slate-600 transition-colors">
+                    <Bike className="h-5 w-5 text-orange-400" />
                   </div>
                   <div className="flex-1">
-                    <p className="font-medium text-gray-900">Scootys</p>
-                    <p className="text-sm text-gray-500">Browse our fleet</p>
+                    <p className="font-medium text-white">Scootys</p>
+                    <p className="text-sm text-slate-400">Browse our fleet</p>
                   </div>
-                  <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-orange-600 transition-colors" />
+                  <ChevronRight className="h-5 w-5 text-slate-500 group-hover:text-orange-400 transition-colors" />
                 </Link>
 
                 {/* Show Profile only if authenticated */}
@@ -237,16 +237,16 @@ export function Navbar() {
                   <Link
                     to="/profile"
                     onClick={handleMenuItemClick}
-                    className="flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 transition-all duration-200 group"
+                    className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition-all duration-200 group"
                   >
-                    <div className="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center group-hover:bg-purple-200 transition-colors">
-                      <UserCircle className="h-5 w-5 text-purple-600" />
+                    <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center group-hover:bg-slate-600 transition-colors">
+                      <UserCircle className="h-5 w-5 text-purple-400" />
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-gray-900">Profile</p>
-                      <p className="text-sm text-gray-500">Manage your account</p>
+                      <p className="font-medium text-white">Profile</p>
+                      <p className="text-sm text-slate-400">Manage your account</p>
                     </div>
-                    <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-blue-600 transition-colors" />
+                    <ChevronRight className="h-5 w-5 text-slate-500 group-hover:text-purple-400 transition-colors" />
                   </Link>
                 )}
 
@@ -255,16 +255,16 @@ export function Navbar() {
                   <Link
                     to="/rider-apply"
                     onClick={handleMenuItemClick}
-                    className="flex items-center gap-3 p-3 rounded-xl hover:bg-green-50 transition-all duration-200 group"
+                    className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition-all duration-200 group"
                   >
-                    <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors">
-                      <Briefcase className="h-5 w-5 text-green-600" />
+                    <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center group-hover:bg-slate-600 transition-colors">
+                      <Briefcase className="h-5 w-5 text-green-400" />
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-gray-900">Become a Rider</p>
-                      <p className="text-sm text-gray-500">Apply for delivery jobs</p>
+                      <p className="font-medium text-white">Become a Rider</p>
+                      <p className="text-sm text-slate-400">Apply for delivery jobs</p>
                     </div>
-                    <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-green-600 transition-colors" />
+                    <ChevronRight className="h-5 w-5 text-slate-500 group-hover:text-green-400 transition-colors" />
                   </Link>
                 )}
 
@@ -273,23 +273,23 @@ export function Navbar() {
                   <Link
                     to="/rider"
                     onClick={handleMenuItemClick}
-                    className="flex items-center gap-3 p-3 rounded-xl hover:bg-green-50 transition-all duration-200 group"
+                    className="flex items-center gap-3 p-3 rounded-xl hover:bg-slate-800 transition-all duration-200 group"
                   >
-                    <div className="w-10 h-10 rounded-full bg-green-100 flex items-center justify-center group-hover:bg-green-200 transition-colors">
-                      <Bike className="h-5 w-5 text-green-600" />
+                    <div className="w-10 h-10 rounded-full bg-slate-700 flex items-center justify-center group-hover:bg-slate-600 transition-colors">
+                      <Bike className="h-5 w-5 text-green-400" />
                     </div>
                     <div className="flex-1">
-                      <p className="font-medium text-gray-900">Rider</p>
-                      <p className="text-sm text-gray-500">Access rider dashboard</p>
+                      <p className="font-medium text-white">Rider</p>
+                      <p className="text-sm text-slate-400">Access rider dashboard</p>
                     </div>
-                    <ChevronRight className="h-5 w-5 text-gray-400 group-hover:text-green-600 transition-colors" />
+                    <ChevronRight className="h-5 w-5 text-slate-500 group-hover:text-green-400 transition-colors" />
                   </Link>
                 )}
               </div>
             </div>
 
             {/* Footer Actions */}
-            <div className="p-4 border-t bg-gray-50">
+            <div className="p-4 border-t border-slate-700 bg-slate-800">
               {isAuthenticated ? (
                 <Button
                   variant="destructive"

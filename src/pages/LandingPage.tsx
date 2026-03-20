@@ -35,34 +35,38 @@ export function LandingPage() {
       icon: Shield,
       title: 'Fully Insured',
       description: 'Comprehensive coverage for peace of mind',
-      color: 'from-emerald-400 to-teal-600',
-      bgColor: 'bg-emerald-50',
+      color: 'from-emerald-500 to-teal-600',
+      bgColor: 'bg-slate-800/50',
+      borderColor: 'border-emerald-500/30',
     },
     {
       icon: Clock,
       title: '24/7 Support',
       description: 'Round the clock assistance anytime',
-      color: 'from-blue-500 to-indigo-600',
-      bgColor: 'bg-blue-50',
+      color: 'from-blue-500 to-cyan-600',
+      bgColor: 'bg-slate-800/50',
+      borderColor: 'border-blue-500/30',
     },
     {
       icon: MapPin,
       title: 'Multiple Locations',
       description: 'Convenient pickup & drop-off points',
-      color: 'from-orange-500 to-red-500',
-      bgColor: 'bg-orange-50',
+      color: 'from-orange-500 to-amber-600',
+      bgColor: 'bg-slate-800/50',
+      borderColor: 'border-orange-500/30',
     },
     {
       icon: Award,
       title: 'Best Rates',
       description: 'Competitive pricing guaranteed',
-      color: 'from-violet-500 to-fuchsia-500',
-      bgColor: 'bg-violet-50',
+      color: 'from-violet-500 to-purple-600',
+      bgColor: 'bg-slate-800/50',
+      borderColor: 'border-violet-500/30',
     },
   ];
 
   return (
-    <div className="flex flex-col min-h-screen bg-white">
+    <div className="flex flex-col min-h-screen bg-slate-950">
       {/* Hero Section - Modern Gradient with Animation */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         {/* Animated Background */}
@@ -148,14 +152,14 @@ export function LandingPage() {
       </section>
 
       {/* Features Section - Glassmorphism Cards */}
-      <section className="py-24 md:py-32 bg-gradient-to-b from-slate-50 to-white relative">
+      <section className="py-24 md:py-32 bg-gradient-to-b from-slate-900 to-slate-800 relative">
         <div className="container px-4 md:px-6">
           <div className="text-center mb-16">
-            <span className="text-blue-600 font-semibold text-sm uppercase tracking-wider">Why Choose Us</span>
-            <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mt-3">
+            <span className="text-cyan-400 font-semibold text-sm uppercase tracking-wider">Why Choose Us</span>
+            <h2 className="text-4xl md:text-5xl font-bold text-white mt-3">
               Ride with Confidence
             </h2>
-            <p className="text-slate-600 mt-4 max-w-2xl mx-auto text-lg">
+            <p className="text-slate-300 mt-4 max-w-2xl mx-auto text-lg">
               Experience the best scooter rental service with premium features and unmatched support
             </p>
           </div>
@@ -164,13 +168,13 @@ export function LandingPage() {
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className={`group relative p-8 rounded-2xl ${feature.bgColor} border border-slate-100 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2`}
+                className={`group relative p-8 rounded-2xl ${feature.bgColor} border-2 ${feature.borderColor} shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2`}
               >
                 <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${feature.color} shadow-lg mb-6 group-hover:scale-110 transition-transform duration-300`}>
                   <feature.icon className="h-6 w-6 text-white" />
                 </div>
-                <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
-                <p className="text-slate-600 leading-relaxed">{feature.description}</p>
+                <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
+                <p className="text-slate-300 leading-relaxed">{feature.description}</p>
               </div>
             ))}
           </div>
@@ -223,7 +227,7 @@ export function LandingPage() {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 px-8 py-6 text-lg font-semibold rounded-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
+                className="border-2 border-white/30 text-white bg-slate-900/50 hover:bg-slate-800/70 hover:border-white/50 px-8 py-6 text-lg font-semibold rounded-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
               >
                 View All Scooters
                 <ArrowRight className="ml-2 h-5 w-5" />

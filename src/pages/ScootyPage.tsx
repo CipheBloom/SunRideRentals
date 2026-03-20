@@ -37,7 +37,7 @@ export function ScootyPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-950 py-12">
         <div className="container px-4 md:px-6">
           <div className="flex items-center justify-center min-h-[500px]">
             <div className="text-center">
@@ -45,7 +45,7 @@ export function ScootyPage() {
                 <div className="w-20 h-20 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
                 <div className="absolute inset-0 w-20 h-20 border-4 border-transparent border-t-cyan-400 rounded-full animate-spin delay-75"></div>
               </div>
-              <p className="text-slate-600 text-lg font-medium">Loading amazing rides...</p>
+              <p className="text-slate-300 text-lg font-medium">Loading amazing rides...</p>
             </div>
           </div>
         </div>
@@ -55,13 +55,13 @@ export function ScootyPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white py-12">
+      <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-950 py-12">
         <div className="container px-4 md:px-6">
           <div className="text-center py-16">
-            <div className="inline-flex p-4 rounded-full bg-red-50 mb-4">
-              <Zap className="h-8 w-8 text-red-500" />
+            <div className="inline-flex p-4 rounded-full bg-red-900/50 mb-4">
+              <Zap className="h-8 w-8 text-red-400" />
             </div>
-            <p className="text-red-500 mb-6 text-lg">{error}</p>
+            <p className="text-red-400 mb-6 text-lg">{error}</p>
             <Button 
               onClick={loadScootys}
               className="bg-blue-600 hover:bg-blue-700 text-white px-6 py-3 rounded-xl shadow-lg shadow-blue-500/30 transition-all hover:-translate-y-0.5"
@@ -76,7 +76,7 @@ export function ScootyPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen bg-gradient-to-b from-slate-900 to-slate-950">
       {/* Hero Header */}
       <div className="bg-slate-900 relative overflow-hidden py-16 md:py-24">
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-600/20 via-slate-900 to-slate-900"></div>
@@ -99,10 +99,10 @@ export function ScootyPage() {
       <div className="container py-12 px-4 md:px-6 -mt-8 relative z-20">
         <div className="flex flex-col space-y-8">
           {/* Category Filter */}
-          <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 p-6">
-            <div className="flex items-center gap-2 mb-4 text-slate-700">
+          <div className="bg-slate-800 rounded-2xl shadow-xl shadow-slate-900/50 p-6 border border-slate-700">
+            <div className="flex items-center gap-2 mb-4 text-slate-300">
               <Filter className="w-5 h-5" />
-              <span className="font-semibold">Filter by Category</span>
+              <span className="font-semibold text-white">Filter by Category</span>
             </div>
             <div className="flex flex-wrap gap-3">
               {categories.map((category) => (
@@ -115,7 +115,7 @@ export function ScootyPage() {
                     rounded-xl px-6 py-2.5 font-medium transition-all duration-300
                     ${selectedCategory === category 
                       ? 'bg-gradient-to-r from-blue-600 to-indigo-600 text-white shadow-lg shadow-blue-500/30 hover:shadow-blue-500/40' 
-                      : 'border-2 border-slate-200 text-slate-600 hover:border-blue-400 hover:text-blue-600 hover:bg-blue-50'
+                      : 'border-2 border-slate-600 text-slate-300 hover:border-blue-400 hover:text-blue-400 hover:bg-slate-700'
                     }
                   `}
                 >
@@ -127,8 +127,8 @@ export function ScootyPage() {
 
           {/* Results Count */}
           <div className="flex items-center justify-between">
-            <p className="text-slate-600">
-              Showing <span className="font-semibold text-slate-900">{filteredscooty.length}</span> {filteredscooty.length === 1 ? 'scooter' : 'scooters'}
+            <p className="text-slate-300">
+              Showing <span className="font-semibold text-white">{filteredscooty.length}</span> {filteredscooty.length === 1 ? 'scooter' : 'scooters'}
             </p>
           </div>
 
@@ -142,14 +142,14 @@ export function ScootyPage() {
           </div>
 
           {filteredscooty.length === 0 && (
-            <div className="text-center py-16 bg-white rounded-2xl shadow-lg shadow-slate-200/50">
-              <div className="inline-flex p-4 rounded-full bg-slate-100 mb-4">
+            <div className="text-center py-16 bg-slate-800 rounded-2xl shadow-lg shadow-slate-900/50 border border-slate-700">
+              <div className="inline-flex p-4 rounded-full bg-slate-700 mb-4">
                 <Bike className="h-8 w-8 text-slate-400" />
               </div>
-              <p className="text-slate-500 text-lg">No scooters available in this category.</p>
+              <p className="text-slate-300 text-lg">No scooters available in this category.</p>
               <Button 
                 variant="outline" 
-                className="mt-4 border-2 border-slate-200 hover:border-blue-400 hover:text-blue-600"
+                className="mt-4 border-2 border-slate-600 hover:border-blue-400 hover:text-blue-400"
                 onClick={() => setSelectedCategory('all')}
               >
                 View All Scooters

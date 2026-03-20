@@ -91,15 +91,15 @@ export function RiderApplicationPage() {
 
   if (isSuccess) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-12 px-4">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-950 py-12 px-4">
         <div className="max-w-2xl mx-auto">
-          <Card>
+          <Card className="bg-slate-800 border-slate-700">
             <CardContent className="p-8 text-center">
-              <div className="w-20 h-20 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-6">
-                <CheckCircle className="w-10 h-10 text-green-600" />
+              <div className="w-20 h-20 bg-green-900/50 rounded-full flex items-center justify-center mx-auto mb-6">
+                <CheckCircle className="w-10 h-10 text-green-400" />
               </div>
-              <h2 className="text-2xl font-bold mb-2">Application Submitted!</h2>
-              <p className="text-gray-600 mb-6">
+              <h2 className="text-2xl font-bold mb-2 text-white">Application Submitted!</h2>
+              <p className="text-slate-300 mb-6">
                 Thank you for applying to become a delivery rider. Our team will review your application and contact you shortly.
               </p>
               <div className="flex gap-4 justify-center">
@@ -119,7 +119,7 @@ export function RiderApplicationPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 py-8 px-4">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 to-slate-950 py-8 px-4">
       <div className="max-w-3xl mx-auto">
         {/* Header */}
         <div className="mb-8">
@@ -127,41 +127,41 @@ export function RiderApplicationPage() {
             <ArrowLeft className="w-4 h-4 mr-2" />
             Back to Home
           </Button>
-          <h1 className="text-3xl font-bold mb-2">Become a Delivery Rider</h1>
-          <p className="text-gray-600">
+          <h1 className="text-3xl font-bold mb-2 text-white">Become a Delivery Rider</h1>
+          <p className="text-slate-300">
             Join our network of delivery partners. Fill out the form below to apply.
           </p>
         </div>
 
-        <Card>
+        <Card className="bg-slate-800 border-slate-700">
           <CardHeader>
-            <CardTitle className="flex items-center gap-2">
+            <CardTitle className="flex items-center gap-2 text-white">
               <Bike className="w-5 h-5" />
               Rider Application Form
             </CardTitle>
-            <CardDescription>
+            <CardDescription className="text-slate-300">
               Please provide accurate information to help us process your application faster.
             </CardDescription>
           </CardHeader>
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-6">
               {error && (
-                <div className="p-4 bg-red-50 border border-red-200 rounded-lg flex items-center gap-2 text-red-700">
+                <div className="p-4 bg-red-900/50 border border-red-700 rounded-lg flex items-center gap-2 text-red-300">
                   <AlertCircle className="w-5 h-5" />
                   {error}
                 </div>
               )}
 
               {/* Personal Information */}
-              <div className="border rounded-lg p-4 space-y-4">
-                <h3 className="font-semibold flex items-center gap-2">
+              <div className="border border-slate-600 rounded-lg p-4 space-y-4">
+                <h3 className="font-semibold flex items-center gap-2 text-white">
                   <User className="w-4 h-4" />
                   Personal Information
                 </h3>
                 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="fullName">Full Name *</Label>
+                    <Label htmlFor="fullName" className="text-slate-300">Full Name *</Label>
                     <Input
                       id="fullName"
                       value={formData.fullName}
@@ -171,7 +171,7 @@ export function RiderApplicationPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="age">Age *</Label>
+                    <Label htmlFor="age" className="text-slate-300">Age *</Label>
                     <Input
                       id="age"
                       type="number"
@@ -186,7 +186,7 @@ export function RiderApplicationPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="phone" className="flex items-center gap-2">
+                  <Label htmlFor="phone" className="flex items-center gap-2 text-slate-300">
                     <Phone className="w-4 h-4" />
                     Phone Number *
                   </Label>
@@ -202,7 +202,7 @@ export function RiderApplicationPage() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
-                    <Label htmlFor="aadharNumber" className="flex items-center gap-2">
+                    <Label htmlFor="aadharNumber" className="flex items-center gap-2 text-slate-300">
                       <IdCard className="w-4 h-4" />
                       Aadhar Card Number *
                     </Label>
@@ -217,7 +217,7 @@ export function RiderApplicationPage() {
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="panNumber" className="flex items-center gap-2">
+                    <Label htmlFor="panNumber" className="flex items-center gap-2 text-slate-300">
                       <CreditCard className="w-4 h-4" />
                       PAN Card Number *
                     </Label>
@@ -234,7 +234,7 @@ export function RiderApplicationPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="city" className="flex items-center gap-2">
+                  <Label htmlFor="city" className="flex items-center gap-2 text-slate-300">
                     <MapPin className="w-4 h-4" />
                     City/Location *
                   </Label>
@@ -249,14 +249,14 @@ export function RiderApplicationPage() {
               </div>
 
               {/* Vehicle Information */}
-              <div className="border rounded-lg p-4 space-y-4">
-                <h3 className="font-semibold flex items-center gap-2">
+              <div className="border border-slate-600 rounded-lg p-4 space-y-4">
+                <h3 className="font-semibold flex items-center gap-2 text-white">
                   <Bike className="w-4 h-4" />
                   Vehicle Information
                 </h3>
                 
                 <div className="space-y-2">
-                  <Label>Vehicle Type *</Label>
+                  <Label className="text-slate-300">Vehicle Type *</Label>
                   <div className="flex flex-wrap gap-3">
                     {['scooter', 'motorcycle', 'bicycle'].map((type) => (
                       <label key={type} className="flex items-center gap-2 cursor-pointer">
@@ -268,7 +268,7 @@ export function RiderApplicationPage() {
                           onChange={(e) => handleChange('vehicleType', e.target.value)}
                           className="w-4 h-4"
                         />
-                        <span className="capitalize">{type}</span>
+                        <span className="capitalize text-slate-200">{type}</span>
                       </label>
                     ))}
                   </div>
@@ -280,14 +280,14 @@ export function RiderApplicationPage() {
                     checked={formData.hasLicense}
                     onCheckedChange={(checked: boolean) => handleChange('hasLicense', checked === true)}
                   />
-                  <Label htmlFor="hasLicense" className="cursor-pointer">
+                  <Label htmlFor="hasLicense" className="cursor-pointer text-slate-300">
                     I have a valid driver's license
                   </Label>
                 </div>
 
                 {formData.hasLicense && (
                   <div className="space-y-2">
-                    <Label htmlFor="licenseNumber">License Number</Label>
+                    <Label htmlFor="licenseNumber" className="text-slate-300">License Number</Label>
                     <Input
                       id="licenseNumber"
                       value={formData.licenseNumber}
@@ -299,14 +299,14 @@ export function RiderApplicationPage() {
               </div>
 
               {/* Work Preferences */}
-              <div className="border rounded-lg p-4 space-y-4">
-                <h3 className="font-semibold flex items-center gap-2">
+              <div className="border border-slate-600 rounded-lg p-4 space-y-4">
+                <h3 className="font-semibold flex items-center gap-2 text-white">
                   <Clock className="w-4 h-4" />
                   Work Preferences
                 </h3>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="experience">Experience (Years)</Label>
+                  <Label htmlFor="experience" className="text-slate-300">Experience (Years)</Label>
                   <Input
                     id="experience"
                     value={formData.experience}
@@ -316,7 +316,7 @@ export function RiderApplicationPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="preferredWorkArea">Preferred Work Area</Label>
+                  <Label htmlFor="preferredWorkArea" className="text-slate-300">Preferred Work Area</Label>
                   <Input
                     id="preferredWorkArea"
                     value={formData.preferredWorkArea}
@@ -326,12 +326,12 @@ export function RiderApplicationPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="availability">Availability *</Label>
+                  <Label htmlFor="availability" className="text-slate-300">Availability *</Label>
                   <select
                     id="availability"
                     value={formData.availability}
                     onChange={(e) => handleChange('availability', e.target.value)}
-                    className="w-full h-10 px-3 rounded-md border border-input bg-background"
+                    className="w-full h-10 px-3 rounded-md border border-slate-600 bg-slate-700 text-white"
                     required
                   >
                     <option value="full-time">Full Time</option>
@@ -343,14 +343,14 @@ export function RiderApplicationPage() {
               </div>
 
               {/* Additional Information */}
-              <div className="border rounded-lg p-4 space-y-4">
-                <h3 className="font-semibold flex items-center gap-2">
+              <div className="border border-slate-600 rounded-lg p-4 space-y-4">
+                <h3 className="font-semibold flex items-center gap-2 text-white">
                   <FileText className="w-4 h-4" />
                   Additional Information
                 </h3>
                 
                 <div className="space-y-2">
-                  <Label htmlFor="additionalInfo">Tell us about yourself</Label>
+                  <Label htmlFor="additionalInfo" className="text-slate-300">Tell us about yourself</Label>
                   <Textarea
                     id="additionalInfo"
                     value={formData.additionalInfo}
@@ -370,8 +370,8 @@ export function RiderApplicationPage() {
               </Button>
 
               {!isAuthenticated && (
-                <p className="text-center text-sm text-gray-500">
-                  Please <button type="button" onClick={() => navigate('/login')} className="text-blue-600 hover:underline">login</button> to submit your application
+                <p className="text-center text-sm text-slate-400">
+                  Please <button type="button" onClick={() => navigate('/login')} className="text-blue-400 hover:underline">login</button> to submit your application
                 </p>
               )}
             </form>

@@ -47,6 +47,11 @@
   to = "/.netlify/functions/simple"
   status = 200
 
+[[redirects]]
+  from = "/api/stats"
+  to = "/.netlify/functions/stats"
+  status = 200
+
 # Redirect all routes to index.html for React Router (must be last)
 [[redirects]]
   from = "/*"

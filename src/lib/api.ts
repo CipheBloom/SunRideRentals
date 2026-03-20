@@ -145,13 +145,13 @@ export const adminAPI = {
     }),
 
   // Get all bookings
-  getAllBookings: () => fetchAPI('/admin/bookings'),
+  getAllBookings: () => fetchAPI('/api/bookings'),
 
   // Get all users
-  getAllUsers: () => fetchAPI('/admin/users'),
+  getAllUsers: () => fetchAPI('/api/users'),
 
   // Get all vehicles
-  getAllVehicles: () => fetchAPI('/admin/vehicles'),
+  getAllVehicles: () => fetchAPI('/api/vehicles'),
 
   // Update vehicle availability
   updateVehicleAvailability: (id: string, available: boolean) =>
@@ -194,11 +194,11 @@ export const adminAPI = {
     }),
 
   // Get stats
-  getStats: () => fetchAPI('/admin/stats') as Promise<AdminStats>,
+  getStats: () => fetchAPI('/api/stats') as Promise<AdminStats>,
 
   // === RIDER APPLICATION ROUTES (Admin) ===
   // Get all rider applications
-  getAllRiderApplications: () => fetchAPI('/admin/rider-applications'),
+  getAllRiderApplications: () => fetchAPI('/api/rider-applications'),
 
   // Update rider application status
   updateRiderApplicationStatus: (id: string, status: string, adminNotes?: string) =>

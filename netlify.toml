@@ -18,6 +18,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/vehicles/:vehicleId"
+  to = "/.netlify/functions/vehicles"
+  status = 200
+
+[[redirects]]
   from = "/api/test"
   to = "/.netlify/functions/test"
   status = 200

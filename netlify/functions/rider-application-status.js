@@ -131,11 +131,26 @@ exports.handler = async (event, context) => {
       }
       
       // Update rider application status in MongoDB
-      const application = await RiderApplication.findOneAndUpdate(
+      // Try to find by 'id' field first, then by '_id' (MongoDB ObjectId)
+      let application = await RiderApplication.findOneAndUpdate(
         { id: applicationId },
         { status, adminNotes: adminNotes || '', updatedAt: new Date() },
         { new: true, upsert: false }
       );
+      
+      // If not found by id, try by _id
+      if (!application) {
+        try {
+          application = await RiderApplication.findOneAndUpdate(
+            { _id: applicationId },
+            { status, adminNotes: adminNotes || '', updatedAt: new Date() },
+            { new: true, upsert: false }
+          );
+        } catch (e) {
+          // _id query failed (might be invalid ObjectId format)
+          console.log('⚠️ Query by _id failed:', e.message);
+        }
+      }
       
       if (!application) {
         return {

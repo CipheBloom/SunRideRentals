@@ -53,6 +53,88 @@ exports.handler = async (event, context) => {
   try {
     const dbConnected = await connectDB();
     
+    // Handle PUT request - Update user
+    if (event.httpMethod === 'PUT') {
+      const userData = JSON.parse(event.body);
+      
+      if (!dbConnected) {
+        // Return mock response if MongoDB not connected
+        console.log('📝 Updating user (mock - no MongoDB)');
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            ...userData,
+            updatedAt: new Date().toISOString()
+          }, null, 2),
+        };
+      }
+      
+      // Update user in MongoDB
+      const user = await User.findOneAndUpdate(
+        { id: userData.id },
+        userData,
+        { new: true, upsert: false }
+      );
+      
+      if (!user) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ error: 'User not found' }),
+        };
+      }
+      
+      console.log('✅ User updated in MongoDB:', user.id);
+      
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify(user.toObject(), null, 2),
+      };
+    }
+    
+    // Handle DELETE request - Delete user
+    if (event.httpMethod === 'DELETE') {
+      const userId = event.pathParameters?.userId || 
+                   event.path?.split('/').pop();
+      
+      if (!dbConnected) {
+        // Return mock response if MongoDB not connected
+        console.log('📝 Deleting user (mock - no MongoDB)');
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ 
+            message: 'User deleted successfully (mock)',
+            id: userId
+          }, null, 2),
+        };
+      }
+      
+      // Delete user from MongoDB
+      const result = await User.deleteOne({ id: userId });
+      
+      if (result.deletedCount === 0) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ error: 'User not found' }),
+        };
+      }
+      
+      console.log('✅ User deleted from MongoDB:', userId);
+      
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ 
+          message: 'User deleted successfully',
+          id: userId
+        }, null, 2),
+      };
+    }
+    
     // Handle GET request - Get all users
     if (event.httpMethod === 'GET') {
       if (!dbConnected) {

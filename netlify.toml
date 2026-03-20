@@ -44,6 +44,11 @@
   status = 200
 
 [[redirects]]
+  from = "/api/bookings/:bookingId"
+  to = "/.netlify/functions/bookings"
+  status = 200
+
+[[redirects]]
   from = "/api/bookings/:userId"
   to = "/.netlify/functions/user-bookings"
   status = 200
@@ -54,7 +59,17 @@
   status = 200
 
 [[redirects]]
+  from = "/api/users/:userId"
+  to = "/.netlify/functions/users"
+  status = 200
+
+[[redirects]]
   from = "/api/rider-applications"
+  to = "/.netlify/functions/rider-applications"
+  status = 200
+
+[[redirects]]
+  from = "/api/rider-applications/:applicationId"
   to = "/.netlify/functions/rider-applications"
   status = 200
 

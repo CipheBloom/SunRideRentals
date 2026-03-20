@@ -92,6 +92,88 @@ exports.handler = async (event, context) => {
       };
     }
     
+    // Handle PUT request - Update booking
+    if (event.httpMethod === 'PUT') {
+      const bookingData = JSON.parse(event.body);
+      
+      if (!dbConnected) {
+        // Return mock response if MongoDB not connected
+        console.log('📝 Updating booking (mock - no MongoDB)');
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            ...bookingData,
+            updatedAt: new Date().toISOString()
+          }, null, 2),
+        };
+      }
+      
+      // Update booking in MongoDB
+      const booking = await Booking.findOneAndUpdate(
+        { id: bookingData.id },
+        bookingData,
+        { new: true, upsert: false }
+      );
+      
+      if (!booking) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ error: 'Booking not found' }),
+        };
+      }
+      
+      console.log('✅ Booking updated in MongoDB:', booking.id);
+      
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify(booking.toObject(), null, 2),
+      };
+    }
+    
+    // Handle DELETE request - Delete booking
+    if (event.httpMethod === 'DELETE') {
+      const bookingId = event.pathParameters?.bookingId || 
+                       event.path?.split('/').pop();
+      
+      if (!dbConnected) {
+        // Return mock response if MongoDB not connected
+        console.log('📝 Deleting booking (mock - no MongoDB)');
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ 
+            message: 'Booking deleted successfully (mock)',
+            id: bookingId
+          }, null, 2),
+        };
+      }
+      
+      // Delete booking from MongoDB
+      const result = await Booking.deleteOne({ id: bookingId });
+      
+      if (result.deletedCount === 0) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ error: 'Booking not found' }),
+        };
+      }
+      
+      console.log('✅ Booking deleted from MongoDB:', bookingId);
+      
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ 
+          message: 'Booking deleted successfully',
+          id: bookingId
+        }, null, 2),
+      };
+    }
+    
     // Handle GET request - Get all bookings
     if (event.httpMethod === 'GET') {
       if (!dbConnected) {

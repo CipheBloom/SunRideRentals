@@ -65,6 +65,88 @@ exports.handler = async (event, context) => {
   try {
     const dbConnected = await connectDB();
     
+    // Handle PUT request - Update rider application
+    if (event.httpMethod === 'PUT') {
+      const applicationData = JSON.parse(event.body);
+      
+      if (!dbConnected) {
+        // Return mock response if MongoDB not connected
+        console.log('📝 Updating rider application (mock - no MongoDB)');
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({
+            ...applicationData,
+            updatedAt: new Date().toISOString()
+          }, null, 2),
+        };
+      }
+      
+      // Update rider application in MongoDB
+      const application = await RiderApplication.findOneAndUpdate(
+        { id: applicationData.id },
+        applicationData,
+        { new: true, upsert: false }
+      );
+      
+      if (!application) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ error: 'Rider application not found' }),
+        };
+      }
+      
+      console.log('✅ Rider application updated in MongoDB:', application.id);
+      
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify(application.toObject(), null, 2),
+      };
+    }
+    
+    // Handle DELETE request - Delete rider application
+    if (event.httpMethod === 'DELETE') {
+      const applicationId = event.pathParameters?.applicationId || 
+                          event.path?.split('/').pop();
+      
+      if (!dbConnected) {
+        // Return mock response if MongoDB not connected
+        console.log('📝 Deleting rider application (mock - no MongoDB)');
+        return {
+          statusCode: 200,
+          headers,
+          body: JSON.stringify({ 
+            message: 'Rider application deleted successfully (mock)',
+            id: applicationId
+          }, null, 2),
+        };
+      }
+      
+      // Delete rider application from MongoDB
+      const result = await RiderApplication.deleteOne({ id: applicationId });
+      
+      if (result.deletedCount === 0) {
+        return {
+          statusCode: 404,
+          headers,
+          body: JSON.stringify({ error: 'Rider application not found' }),
+        };
+      }
+      
+      console.log('✅ Rider application deleted from MongoDB:', applicationId);
+      
+      return {
+        statusCode: 200,
+        headers,
+        body: JSON.stringify({ 
+          message: 'Rider application deleted successfully',
+          id: applicationId
+        }, null, 2),
+      };
+    }
+    
     // Handle GET request - Get all rider applications
     if (event.httpMethod === 'GET') {
       if (!dbConnected) {

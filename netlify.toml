@@ -18,21 +18,6 @@
   status = 200
 
 [[redirects]]
-  from = "/api/users"
-  to = "/.netlify/functions/users"
-  status = 200
-
-[[redirects]]
-  from = "/api/bookings"
-  to = "/.netlify/functions/bookings"
-  status = 200
-
-[[redirects]]
-  from = "/api/rider-applications"
-  to = "/.netlify/functions/rider-applications"
-  status = 200
-
-[[redirects]]
   from = "/api/test"
   to = "/.netlify/functions/test"
   status = 200
@@ -52,7 +37,7 @@
   to = "/.netlify/functions/stats"
   status = 200
 
-# Admin endpoints with mock data
+# Admin endpoints - all pointing to simple-test for now
 [[redirects]]
   from = "/api/bookings"
   to = "/.netlify/functions/simple-test"
@@ -81,11 +66,6 @@
 [[redirects]]
   from = "/api/test-simple"
   to = "/.netlify/functions/simple-test"
-  status = 200
-
-[[redirects]]
-  from = "/api/bookings"
-  to = "/.netlify/functions/mock-bookings"
   status = 200
 
 [[redirects]]

@@ -55,7 +55,7 @@
 # Admin endpoints with mock data
 [[redirects]]
   from = "/api/bookings"
-  to = "/.netlify/functions/mock-bookings"
+  to = "/.netlify/functions/simple-test"
   status = 200
 
 [[redirects]]
@@ -65,7 +65,7 @@
 
 [[redirects]]
   from = "/api/rider-applications"
-  to = "/.netlify/functions/mock-rider-applications"
+  to = "/.netlify/functions/simple-test"
   status = 200
 
 [[redirects]]

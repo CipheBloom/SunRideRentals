@@ -5,12 +5,25 @@ const MONGO_URI = process.env.MONGO_URI;
 
 if (!MONGO_URI) {
   console.error('❌ MONGO_URI not set');
-  process.exit(1);
+  return {
+    statusCode: 500,
+    headers: {
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*',
+    },
+    body: JSON.stringify({ error: 'MONGO_URI not configured' }),
+  };
 }
 
-mongoose.connect(MONGO_URI)
-  .then(() => console.log('✅ MongoDB Connected'))
-  .catch(err => console.log('❌ MongoDB Error:', err));
+let isConnected = false;
+
+const connectDB = async () => {
+  if (!isConnected) {
+    await mongoose.connect(MONGO_URI);
+    isConnected = true;
+    console.log('✅ MongoDB Connected');
+  }
+};
 
 // Schemas
 const VehicleSchema = new mongoose.Schema({
@@ -35,7 +48,10 @@ const Vehicle = mongoose.model('Vehicle', VehicleSchema);
 
 exports.handler = async (event, context) => {
   try {
-    const vehicles = await Vehicle.find();
+    await connectDB();
+    
+    const vehicles = await Vehicle.find().lean();
+    
     return {
       statusCode: 200,
       headers: {
@@ -45,13 +61,17 @@ exports.handler = async (event, context) => {
       body: JSON.stringify(vehicles),
     };
   } catch (error) {
+    console.error('❌ Error in vehicles function:', error);
     return {
       statusCode: 500,
       headers: {
         'Content-Type': 'application/json',
         'Access-Control-Allow-Origin': '*',
       },
-      body: JSON.stringify({ error: error.message }),
+      body: JSON.stringify({ 
+        error: error.message,
+        stack: error.stack 
+      }),
     };
   }
 };

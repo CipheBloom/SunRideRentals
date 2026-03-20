@@ -35,25 +35,29 @@ export function LandingPage() {
       icon: Shield,
       title: 'Fully Insured',
       description: 'Comprehensive coverage for peace of mind',
-      color: 'from-emerald-400 to-teal-500',
+      color: 'from-emerald-400 to-teal-600',
+      bgColor: 'bg-emerald-50',
     },
     {
       icon: Clock,
       title: '24/7 Support',
       description: 'Round the clock assistance anytime',
-      color: 'from-blue-400 to-indigo-500',
+      color: 'from-blue-500 to-indigo-600',
+      bgColor: 'bg-blue-50',
     },
     {
       icon: MapPin,
       title: 'Multiple Locations',
       description: 'Convenient pickup & drop-off points',
-      color: 'from-orange-400 to-red-500',
+      color: 'from-orange-500 to-red-500',
+      bgColor: 'bg-orange-50',
     },
     {
       icon: Award,
       title: 'Best Rates',
       description: 'Competitive pricing guaranteed',
-      color: 'from-purple-400 to-pink-500',
+      color: 'from-violet-500 to-fuchsia-500',
+      bgColor: 'bg-violet-50',
     },
   ];
 
@@ -62,29 +66,29 @@ export function LandingPage() {
       {/* Hero Section - Modern Gradient with Animation */}
       <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
         {/* Animated Background */}
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900">
+        <div className="absolute inset-0 bg-gradient-to-br from-indigo-950 via-blue-900 to-violet-950">
           <div className="absolute inset-0 bg-[url('data:image/svg+xml,%3Csvg%20width%3D%2260%22%20height%3D%2260%22%20viewBox%3D%220%200%2060%2060%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%3Cg%20fill%3D%22none%22%20fill-rule%3D%22evenodd%22%3E%3Cg%20fill%3D%22%23ffffff%22%20fill-opacity%3D%220.03%22%3E%3Cpath%20d%3D%22M36%2034v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6%2034v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6%204V0H4v4H0v2h4v4h2V6h4V4H6z%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E')] opacity-20"></div>
         </div>
         
         {/* Floating Orbs */}
-        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/20 rounded-full blur-3xl animate-pulse"></div>
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl animate-pulse delay-1000"></div>
-        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-500/10 rounded-full blur-3xl"></div>
+        <div className="absolute top-20 left-10 w-72 h-72 bg-blue-500/30 rounded-full blur-3xl animate-pulse"></div>
+        <div className="absolute bottom-20 right-10 w-96 h-96 bg-purple-600/30 rounded-full blur-3xl animate-pulse delay-1000"></div>
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-cyan-400/15 rounded-full blur-3xl"></div>
 
         {/* Content */}
         <div className="relative z-10 container px-4 md:px-6">
           <div className="flex flex-col items-center space-y-8 text-center">
             {/* Badge */}
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white/90 text-sm font-medium">
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/15 backdrop-blur-sm border border-white/30 text-white text-sm font-medium shadow-lg shadow-white/5">
               <Sparkles className="w-4 h-4 text-yellow-400" />
               <span>Premium Scooty Rentals</span>
             </div>
 
             {/* Main Heading */}
             <div className="space-y-4 max-w-4xl">
-              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-tight">
+              <h1 className="text-5xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-tight drop-shadow-2xl">
                 Ride Your{' '}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 via-blue-400 to-purple-400">
+                <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-300 via-blue-400 to-purple-400 drop-shadow-lg">
                   Dreams
                 </span>
               </h1>
@@ -98,7 +102,7 @@ export function LandingPage() {
               <Link to="/scooty">
                 <Button 
                   size="lg" 
-                  className="bg-white text-slate-900 hover:bg-white/90 px-8 py-6 text-lg font-semibold rounded-xl shadow-2xl shadow-white/20 hover:shadow-white/30 transition-all duration-300 hover:-translate-y-1"
+                  className="bg-white text-indigo-900 hover:bg-blue-50 px-8 py-6 text-lg font-semibold rounded-xl shadow-2xl shadow-blue-500/30 hover:shadow-blue-500/40 transition-all duration-300 hover:-translate-y-1"
                 >
                   Browse Scooters
                   <ArrowRight className="ml-2 h-5 w-5" />
@@ -109,7 +113,7 @@ export function LandingPage() {
                   <Button 
                     size="lg" 
                     variant="outline"
-                    className="border-2 border-white/30 text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold rounded-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
+                    className="border-2 border-white/40 text-white hover:bg-white/15 px-8 py-6 text-lg font-semibold rounded-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 hover:border-white/60"
                   >
                     Sign In
                   </Button>
@@ -160,14 +164,13 @@ export function LandingPage() {
             {features.map((feature) => (
               <div
                 key={feature.title}
-                className="group relative p-8 rounded-2xl bg-white border border-slate-100 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 hover:-translate-y-2"
+                className={`group relative p-8 rounded-2xl ${feature.bgColor} border border-slate-100 shadow-lg hover:shadow-xl transition-all duration-500 hover:-translate-y-2`}
               >
                 <div className={`inline-flex p-4 rounded-xl bg-gradient-to-br ${feature.color} shadow-lg mb-6 group-hover:scale-110 transition-transform duration-300`}>
                   <feature.icon className="h-6 w-6 text-white" />
                 </div>
                 <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
                 <p className="text-slate-600 leading-relaxed">{feature.description}</p>
-                <div className={`absolute inset-0 rounded-2xl bg-gradient-to-br ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}></div>
               </div>
             ))}
           </div>
@@ -175,9 +178,9 @@ export function LandingPage() {
       </section>
 
       {/* Featured Bikes Section - Modern Dark Cards */}
-      <section className="py-24 md:py-32 bg-slate-900 relative overflow-hidden">
+      <section className="py-24 md:py-32 bg-slate-950 relative overflow-hidden">
         {/* Background Pattern */}
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-900/40 via-slate-900 to-slate-900"></div>
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-blue-600/20 via-slate-950 to-slate-950"></div>
         
         <div className="relative z-10 container px-4 md:px-6">
           <div className="flex flex-col items-center text-center mb-16">
@@ -194,7 +197,7 @@ export function LandingPage() {
             {loading ? (
               <div className="col-span-full flex flex-col items-center justify-center py-16">
                 <div className="relative">
-                  <div className="w-16 h-16 border-4 border-blue-500/20 border-t-blue-500 rounded-full animate-spin"></div>
+                  <div className="w-16 h-16 border-4 border-blue-500/30 border-t-blue-500 rounded-full animate-spin"></div>
                   <div className="absolute inset-0 w-16 h-16 border-4 border-transparent border-t-cyan-400 rounded-full animate-spin delay-75"></div>
                 </div>
                 <p className="text-slate-400 mt-6 text-lg">Loading amazing rides...</p>
@@ -220,7 +223,7 @@ export function LandingPage() {
               <Button 
                 variant="outline" 
                 size="lg"
-                className="border-2 border-white/20 text-white hover:bg-white/10 px-8 py-6 text-lg font-semibold rounded-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
+                className="border-2 border-white/30 text-white hover:bg-white/10 hover:border-white/50 px-8 py-6 text-lg font-semibold rounded-xl backdrop-blur-sm transition-all duration-300 hover:-translate-y-1"
               >
                 View All Scooters
                 <ArrowRight className="ml-2 h-5 w-5" />

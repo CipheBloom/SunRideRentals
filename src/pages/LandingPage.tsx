@@ -1,4 +1,4 @@
-import { MapPin, Phone, Clock, Shield, Star, ArrowRight, Zap, Heart, Award, Sparkles } from 'lucide-react';
+import { MapPin, Phone, Clock, Shield, ArrowRight, Zap, Heart, Award, Sparkles } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { ScootyCard } from '@/components/ScootyCard';
@@ -157,7 +157,7 @@ export function LandingPage() {
           </div>
 
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
-            {features.map((feature, index) => (
+            {features.map((feature) => (
               <div
                 key={feature.title}
                 className="group relative p-8 rounded-2xl bg-white border border-slate-100 shadow-lg shadow-slate-200/50 hover:shadow-xl hover:shadow-slate-200/50 transition-all duration-500 hover:-translate-y-2"
@@ -279,7 +279,8 @@ export function LandingPage() {
                 </p>
                 <p className="flex items-center gap-2 hover:text-white transition-colors">
                   <MapPin className="h-4 w-4" />
-                  123 Ritom Street, City
+                  Jorhat, Assam
+
                 </p>
               </div>
             </div>

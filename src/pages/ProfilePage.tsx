@@ -27,7 +27,9 @@ export function ProfilePage() {
       // Fetch bookings from MongoDB
       const fetchBookings = async () => {
         try {
+          console.log('🔄 Fetching bookings for user:', user.id);
           const userBookings = await bookingAPI.getByUser(user.id);
+          console.log('📋 Bookings fetched:', userBookings);
           setBookings(userBookings);
         } catch (error) {
           console.error('❌ Failed to fetch bookings:', error);
@@ -38,7 +40,9 @@ export function ProfilePage() {
       const fetchRiderApplication = async () => {
         try {
           // Get user's own application
+          console.log('🔄 Fetching rider application for user:', user.id);
           const application = await riderApplicationAPI.getByUserId(user.id);
+          console.log('📄 Rider application fetched:', application);
           setRiderApplication(application || null);
         } catch (error) {
           console.error('❌ Failed to fetch rider application:', error);
@@ -314,9 +318,19 @@ export function ProfilePage() {
           </CardHeader>
           <CardContent>
             {isLoading ? (
-              <p className="text-black text-center py-4 font-bold">Loading bookings...</p>
+              <div className="text-center py-8">
+                <div className="inline-flex items-center gap-3 px-4 py-3 border-4 border-black bg-blue-100 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <div className="w-6 h-6 border-4 border-black border-t-blue-500 bg-white shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] animate-spin"></div>
+                  <p className="text-black font-bold">Loading bookings...</p>
+                </div>
+              </div>
             ) : bookings.length === 0 ? (
-              <p className="text-black text-center py-4 font-bold">No bookings yet</p>
+              <div className="text-center py-8">
+                <div className="inline-flex items-center gap-3 px-4 py-3 border-4 border-black bg-yellow-100 shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">
+                  <Bike className="w-6 h-6 text-black" />
+                  <p className="text-black font-bold">No bookings yet</p>
+                </div>
+              </div>
             ) : (
               <div className="space-y-3">
                 {bookings.slice(0, 3).map((booking) => {

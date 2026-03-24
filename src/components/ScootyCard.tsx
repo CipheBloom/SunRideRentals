@@ -32,20 +32,20 @@ export function ScootyCard({ scooty }: ScootyCardProps) {
 
   return (
     <>
-      <Card className="overflow-hidden hover:shadow-lg transition-shadow bg-slate-800 border-slate-700">
+      <Card className="overflow-hidden hover:shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transition-all duration-300 hover:-translate-y-1 bg-white border-4 border-black transform hover:scale-105 animate-fadeInUp">
         <CardHeader className="p-0">
           <div className="relative">
             <img
               src={scooty.image}
               alt={scooty.name}
-              className="w-full h-48 object-cover"
+              className="w-full h-48 object-cover transition-transform duration-300 hover:scale-110"
             />
             <div className="absolute top-2 right-2">
-              <Badge variant="secondary" className="bg-slate-900/90 text-white border-slate-600">
+              <Badge className="bg-blue-600 text-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] font-black">
                 {isRider && scooty.riderPricePerDay ? (
                   <span>
-                    <span className="line-through text-slate-400 text-xs">₹{scooty.pricePerDay}</span>
-                    <span className="text-green-400 ml-1">₹{scooty.riderPricePerDay}/day</span>
+                    <span className="line-through text-blue-200 text-xs">₹{scooty.pricePerDay}</span>
+                    <span className="text-yellow-300 ml-1">₹{scooty.riderPricePerDay}/day</span>
                   </span>
                 ) : (
                   `₹${scooty.pricePerDay}/day`
@@ -54,40 +54,44 @@ export function ScootyCard({ scooty }: ScootyCardProps) {
             </div>
             {isRider && (
               <div className="absolute top-2 left-2">
-                <Badge className="bg-green-600 text-white">Rider Price</Badge>
+                <Badge className="bg-green-500 text-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] font-black animate-pulse">RIDER PRICE</Badge>
               </div>
             )}
           </div>
         </CardHeader>
         
         <CardContent className="p-4">
-          <CardTitle className="text-lg mb-2">{scooty.name}</CardTitle>
-          <p className="text-slate-400 text-sm mb-4">
+          <CardTitle className="text-lg mb-2 font-black text-black transition-colors duration-300 hover:text-blue-600">{scooty.name}</CardTitle>
+          <p className="text-black font-bold text-sm mb-4 bg-blue-100 p-2 border-2 border-black">
             {scooty.description}
           </p>
           
           <div className="grid grid-cols-2 gap-4 mb-4">
-            <div className="flex items-center gap-2 text-sm">
-              <Gauge className="h-4 w-4 text-slate-400" />
-              <span className="font-medium text-white">{scooty.specs.engine}</span>
+            <div className="flex items-center gap-2 text-sm bg-blue-200 p-2 border-2 border-black">
+              <div className="w-8 h-8 bg-blue-600 border-2 border-black flex items-center justify-center">
+                <Gauge className="h-4 w-4 text-white" />
+              </div>
+              <span className="font-black text-black">{scooty.specs.engine}</span>
             </div>
-            <div className="flex items-center gap-2 text-sm">
-              <Fuel className="h-4 w-4 text-slate-400" />
-              <span className="font-medium text-white">{scooty.specs.mileage}</span>
+            <div className="flex items-center gap-2 text-sm bg-blue-200 p-2 border-2 border-black">
+              <div className="w-8 h-8 bg-blue-600 border-2 border-black flex items-center justify-center">
+                <Fuel className="h-4 w-4 text-white" />
+              </div>
+              <span className="font-black text-black">{scooty.specs.mileage}</span>
             </div>
           </div>
           
           <div className="flex items-center justify-between">
             <div className="flex flex-col">
-              <span className="text-lg font-bold text-blue-400">
+              <span className="text-lg font-black text-blue-600">
                 ₹{displayPrice}
               </span>
               {isRider && scooty.riderPricePerDay && (
-                <span className="text-xs text-green-400">Rider discount applied!</span>
+                <span className="text-xs text-green-600 font-black bg-green-100 px-2 py-1 border-2 border-black inline-block">RIDER DISCOUNT!</span>
               )}
             </div>
-            <Badge variant={scooty.available ? 'default' : 'secondary'}>
-              {scooty.available ? 'Available' : 'Unavailable'}
+            <Badge className={`${scooty.available ? 'bg-blue-300 text-black' : 'bg-red-100 text-red-600'} border-4 border-black font-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]`}>
+              {scooty.available ? 'AVAILABLE' : 'UNAVAILABLE'}
             </Badge>
           </div>
         </CardContent>
@@ -96,9 +100,13 @@ export function ScootyCard({ scooty }: ScootyCardProps) {
           <Button 
             onClick={handleBookClick}
             disabled={!scooty.available}
-            className="w-full"
+            className={`w-full font-black border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)] hover:shadow-[2px_2px_0px_0px_rgba(0,0,0,1)] hover:translate-x-1 hover:translate-y-1 transition-all duration-300 transform hover:scale-105 uppercase ${
+              scooty.available 
+                ? 'bg-blue-600 hover:bg-blue-700 text-white' 
+                : 'bg-gray-400 text-gray-600 cursor-not-allowed'
+            }`}
           >
-            {scooty.available ? 'Book Now' : 'Unavailable'}
+            {scooty.available ? 'BOOK NOW' : 'UNAVAILABLE'}
           </Button>
         </CardFooter>
       </Card>

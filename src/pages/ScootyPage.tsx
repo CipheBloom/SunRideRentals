@@ -2,12 +2,9 @@ import { useState, useEffect } from 'react';
 import { MobileScootyCard } from '@/components/MobileScootyCard';
 import { Button } from '@/components/ui/button';
 import { vehicleAPI, type VehicleData } from '@/lib/api';
-import { Zap, RefreshCw, Bike, Home, ShoppingCart, User } from 'lucide-react';
-import { Link } from 'react-router-dom';
-import { useAuth } from '@/contexts/AuthContext';
+import { Zap, RefreshCw, Bike } from 'lucide-react';
 
 export function ScootyPage() {
-  const { isAuthenticated } = useAuth();
   const [scooty, setScooty] = useState<VehicleData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -131,24 +128,6 @@ export function ScootyPage() {
             <p className="text-black font-black text-xl bg-blue-100 px-6 py-3 border-4 border-black inline-block">NO VEHICLES AVAILABLE</p>
           </div>
         )}
-      </div>
-
-      {/* Bottom Navigation */}
-      <div className="fixed bottom-0 left-0 right-0 bg-blue-600 border-t-4 border-black animate-slideUp">
-        <div className="flex items-center justify-around py-3">
-          <Link to="/" className="flex flex-col items-center p-3 bg-blue-300 border-4 border-black -translate-y-2 shadow-[8px_8px_0px_0px_rgba(0,0,0,1)] transform transition-all duration-300 hover:scale-110 hover:-translate-y-3 animate-bounce">
-            <Home className="w-6 h-6 text-black" />
-            <span className="text-xs font-black mt-1">HOME</span>
-          </Link>
-          <button className="flex flex-col items-center p-3 transform transition-all duration-300 hover:scale-110 hover:text-blue-200">
-            <ShoppingCart className="w-6 h-6 text-white" />
-            <span className="text-xs font-black mt-1 text-white">CART</span>
-          </button>
-          <Link to={isAuthenticated ? "/profile" : "/login"} className="flex flex-col items-center p-3 transform transition-all duration-300 hover:scale-110 hover:text-blue-200">
-            <User className="w-6 h-6 text-white" />
-            <span className="text-xs font-black mt-1 text-white">{isAuthenticated ? 'PROFILE' : 'LOGIN'}</span>
-          </Link>
-        </div>
       </div>
     </div>
   );

@@ -17,17 +17,14 @@ const ADMIN_EMAIL = 'sunriderental21@gmail.com';
 const ADMIN_PASSWORD = 'sunriderental21';
 
 export function AdminAuthProvider({ children }: { children: ReactNode }) {
-  const [admin, setAdmin] = useState<Admin | null>(() => {
-    const saved = localStorage.getItem('sunride_admin');
-    return saved ? JSON.parse(saved) : null;
-  });
+  const [admin, setAdmin] = useState<Admin | null>(null);
 
   const login = useCallback(async (email: string, password: string): Promise<boolean> => {
     // Validate credentials
     if (email === ADMIN_EMAIL && password === ADMIN_PASSWORD) {
       const adminData: Admin = { email };
       setAdmin(adminData);
-      localStorage.setItem('sunride_admin', JSON.stringify(adminData));
+      // No localStorage - admin state is managed in React state only
       return true;
     }
     return false;
@@ -35,7 +32,7 @@ export function AdminAuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(() => {
     setAdmin(null);
-    localStorage.removeItem('sunride_admin');
+    // No localStorage to clear
   }, []);
 
   return (

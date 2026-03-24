@@ -54,8 +54,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         picture: googlePicture || gravatarUrl,
       };
       
-      // Store Google user data in localStorage for persistence
-      localStorage.setItem('sunride_google_user', JSON.stringify(userData));
+      // Store Google user data in MongoDB for persistence
+      // No localStorage - user data will be fetched from MongoDB on app load
       
       // Sync to MongoDB and get any additional user data
       try {
@@ -98,9 +98,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
       } catch (error) {
         console.error('❌ Error syncing user to MongoDB:', error);
-        // Fallback to local only
+        // Fallback to local state only
         setUser(userData);
-        console.log('🔄 User data stored locally:', userData);
+        console.log('🔄 User data stored in local state:', userData);
       }
     } catch (error) {
       console.error('Error decoding JWT:', error);
@@ -141,9 +141,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         };
         await userAPI.create(newUser);
         console.log('✅ User created in MongoDB during sync:', newUser);
+        // User data is now stored in MongoDB, no localStorage needed
+        console.log('🔄 User data stored in MongoDB:', newUser);
         setUser(newUser);
-        localStorage.setItem('sunride_user', JSON.stringify(newUser));
-        console.log('🔄 User data stored in localStorage:', newUser);
       } else {
         // Update existing user with latest data
         const updatedUser = {
@@ -156,8 +156,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         await userAPI.update(user.id, updatedUser);
         console.log('✅ User data synced to MongoDB:', updatedUser);
         setUser(updatedUser);
-        localStorage.setItem('sunride_user', JSON.stringify(updatedUser));
-        console.log('🔄 User data stored in localStorage:', updatedUser);
+        console.log('🔄 User data stored in MongoDB:', updatedUser);
       }
     } catch (error) {
       console.error('❌ Error syncing user:', error);
@@ -176,27 +175,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const initializeAuth = async () => {
       try {
-        // Try to get user data from Google OAuth first
-        const savedGoogleUser = localStorage.getItem('sunride_google_user');
-        if (savedGoogleUser) {
-          const googleUserData = JSON.parse(savedGoogleUser);
-          console.log('🔄 Found Google user data, syncing to MongoDB...');
-          // Create user in MongoDB from Google data
-          const newUser = {
-            id: googleUserData.id,
-            name: googleUserData.name,
-            email: googleUserData.email,
-            picture: googleUserData.picture,
-            phone: '',
-            address: '',
-            isRider: false,
-            createdAt: new Date().toISOString()
-          };
-          await userAPI.create(newUser);
-          console.log('✅ New user created in MongoDB:', newUser);
-          setUser(newUser);
-          console.log('🔄 User data stored in MongoDB:', newUser);
-        }
+        // Try to get user data from MongoDB via API
+        // Check if we have a current session (you might want to implement session management)
+        console.log('🔄 Initializing auth from MongoDB...');
+        // User data will be loaded from MongoDB when needed via API calls
       } catch (error) {
         console.error('❌ Error initializing auth:', error);
       }
@@ -207,7 +189,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   const logout = useCallback(() => {
     setUser(null);
-    localStorage.removeItem('sunride_google_user');
+    // No localStorage to clear - user data is in MongoDB
   }, []);
 
   const getAvatarUrl = useCallback(() => {

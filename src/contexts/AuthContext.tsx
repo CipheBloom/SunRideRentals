@@ -175,22 +175,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     }
   }, [user, syncUser]);
 
-  // Periodic sync to ensure data consistency
-  useEffect(() => {
-    if (!user) return;
-    
-    const syncInterval = setInterval(() => {
-      console.log('🔄 Periodic user data sync check...');
-      syncUser();
-    }, 60000); // Sync every minute
-    
-    // Initial sync
-    syncUser();
-    
-    // Cleanup on unmount
-    return () => clearInterval(syncInterval);
-  }, [user, syncUser]);
-
   const logout = useCallback(() => {
     setUser(null);
     localStorage.removeItem('sunride_user');

@@ -3,6 +3,7 @@ const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:5000';
 // Generic fetch wrapper
 async function fetchAPI(endpoint: string, options: RequestInit = {}) {
   const url = `${API_URL}${endpoint}`;
+  console.log(`🌐 API Request: ${options.method || 'GET'} ${url}`);
   
   const response = await fetch(url, {
     ...options,
@@ -13,6 +14,7 @@ async function fetchAPI(endpoint: string, options: RequestInit = {}) {
   });
 
   if (!response.ok) {
+    console.error(`❌ API Error: ${response.status} ${url}`);
     throw new Error(`API Error: ${response.status}`);
   }
 
@@ -20,11 +22,12 @@ async function fetchAPI(endpoint: string, options: RequestInit = {}) {
   
   try {
     const json = JSON.parse(text);
+    console.log(`✅ API Response: ${options.method || 'GET'} ${url}`, json);
     return json;
   } catch (parseError) {
     console.error(`❌ JSON parse error for ${url}:`, parseError);
     console.error(`❌ Raw response that failed to parse:`, text);
-    throw new Error(`JSON.parse: unexpected character at line 1 column 1 of the JSON data`);
+    throw new Error(`JSON.parse: unexpected character at line 1 column 1 of JSON data`);
   }
 }
 
@@ -52,24 +55,30 @@ export const userAPI = {
   getByEmail: (email: string) => fetchAPI(`/users/email/${encodeURIComponent(email)}`),
 
   // POST new user (sync on login)
-  create: (data: UserData) =>
-    fetchAPI('/users', {
+  create: (data: UserData) => {
+    console.log('🔄 Creating new user in MongoDB:', data);
+    return fetchAPI('/users', {
       method: 'POST',
       body: JSON.stringify(data),
-    }),
+    });
+  },
 
   // PUT update user profile
-  update: (id: string, data: Partial<UserData>) =>
-    fetchAPI(`/users/${id}`, {
+  update: (id: string, data: Partial<UserData>) => {
+    console.log('🔄 Updating user in MongoDB:', { id, data });
+    return fetchAPI(`/users/${id}`, {
       method: 'PUT',
       body: JSON.stringify(data),
-    }),
+    });
+  },
 
   // DELETE user
-  delete: (id: string) =>
-    fetchAPI(`/users/${id}`, {
+  delete: (id: string) => {
+    console.log('🔄 Deleting user from MongoDB:', id);
+    return fetchAPI(`/users/${id}`, {
       method: 'DELETE',
-    }),
+    });
+  },
 };
 
 // === BOOKING API ===

@@ -177,22 +177,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Periodic sync to ensure data consistency
   useEffect(() => {
-    if (user) {
-      const syncInterval = setInterval(() => {
-        console.log('🔄 Periodic user data sync check...');
-        syncUser();
-      }, 60000); // Sync every minute
-      
-      return () => clearInterval(syncInterval);
-    };
-      
-      // Initial sync
+    if (!user) return;
+    
+    const syncInterval = setInterval(() => {
+      console.log('🔄 Periodic user data sync check...');
       syncUser();
-      
-      // Cleanup on unmount
-      return syncInterval;
-    }
-  }, [user]);
+    }, 60000); // Sync every minute
+    
+    // Initial sync
+    syncUser();
+    
+    // Cleanup on unmount
+    return () => clearInterval(syncInterval);
+  }, [user, syncUser]);
 
   const logout = useCallback(() => {
     setUser(null);

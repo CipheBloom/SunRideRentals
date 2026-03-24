@@ -26,7 +26,10 @@ function md5(str: string): string {
 }
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-  const [user, setUser] = useState<User | null>(null);
+  const [user, setUser] = useState<User | null>(() => {
+    const saved = localStorage.getItem('sunride_user');
+    return saved ? JSON.parse(saved) : null;
+  });
 
   const login = useCallback(async (credentialResponse: { credential: string }) => {
     try {
@@ -54,35 +57,25 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         picture: googlePicture || gravatarUrl,
       };
       
-      // Store Google user data in localStorage for persistence
-      localStorage.setItem('sunride_google_user', JSON.stringify(userData));
-      
       // Sync to MongoDB and get any additional user data
       try {
         let existingUser;
         try {
-          console.log('🔄 Checking for existing user in MongoDB:', email);
-          existingUser = await userAPI.getByEmail(email);
+          existingUser = await userAPI.getByEmail(userData.email);
         } catch {
           existingUser = null;
         }
 
         if (!existingUser) {
-          // Create new user in MongoDB
-          const newUser = {
-            id: payload.sub,
-            name: payload.name,
-            email: payload.email,
-            picture: googlePicture || gravatarUrl,
-            phone: '',
-            address: '',
-            isRider: false,
-            createdAt: new Date().toISOString()
-          };
-          await userAPI.create(newUser);
-          console.log('✅ New user created in MongoDB:', newUser);
-          setUser(newUser);
-          console.log('🔄 User data stored in MongoDB:', newUser);
+          await userAPI.create({
+            id: userData.id,
+            name: userData.name,
+            email: userData.email,
+            picture: userData.picture || ''
+          });
+          console.log('✅ New user created in MongoDB');
+          setUser(userData);
+          localStorage.setItem('sunride_user', JSON.stringify(userData));
         } else {
           // Merge MongoDB data (phone, address, isRider) with Google auth data
           const mergedUser: User = {
@@ -93,14 +86,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             riderApprovedAt: existingUser.riderApprovedAt
           };
           setUser(mergedUser);
-          console.log('✅ User data merged from MongoDB:', mergedUser);
-          console.log('🔄 User data stored in MongoDB:', mergedUser);
+          localStorage.setItem('sunride_user', JSON.stringify(mergedUser));
+          console.log('✅ User data loaded from MongoDB');
         }
       } catch (error) {
         console.error('❌ Error syncing user to MongoDB:', error);
         // Fallback to local only
         setUser(userData);
-        console.log('🔄 User data stored locally:', userData);
+        localStorage.setItem('sunride_user', JSON.stringify(userData));
       }
     } catch (error) {
       console.error('Error decoding JWT:', error);
@@ -108,56 +101,38 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const syncUser = useCallback(async () => {
-    if (!user) {
-      console.log('❌ No user to sync');
-      return;
-    }
-    
-    console.log('🔄 Syncing user data for:', user.email);
+    if (!user) return;
     
     try {
       // Check if user exists in MongoDB
       let existingUser;
       try {
         existingUser = await userAPI.getByEmail(user.email);
-        console.log('📋 Found existing user in MongoDB:', existingUser);
       } catch {
         // User doesn't exist yet
         existingUser = null;
-        console.log('📋 User not found in MongoDB');
       }
 
       if (!existingUser) {
-        // Create user in MongoDB if they don't exist
-        const newUser = {
+        // Create user in MongoDB
+        await userAPI.create({
           id: user.id,
           name: user.name,
           email: user.email,
           picture: user.picture || '',
           phone: user.phone || '',
-          address: user.address || '',
-          isRider: false,
-          createdAt: new Date().toISOString()
-        };
-        await userAPI.create(newUser);
-        console.log('✅ User created in MongoDB during sync:', newUser);
-        setUser(newUser);
-        localStorage.setItem('sunride_user', JSON.stringify(newUser));
-        console.log('🔄 User data stored in localStorage:', newUser);
+          address: user.address || ''
+        });
+        console.log('✅ User synced to MongoDB');
       } else {
-        // Update existing user with latest data
-        const updatedUser = {
-          ...existingUser,
-          name: user.name,
-          picture: user.picture || '',
-          phone: user.phone || existingUser.phone || '',
-          address: user.address || existingUser.address || ''
-        };
-        await userAPI.update(user.id, updatedUser);
-        console.log('✅ User data synced to MongoDB:', updatedUser);
-        setUser(updatedUser);
-        localStorage.setItem('sunride_user', JSON.stringify(updatedUser));
-        console.log('🔄 User data stored in localStorage:', updatedUser);
+        // Update existing user info if needed
+        if (existingUser.name !== user.name || existingUser.picture !== user.picture) {
+          await userAPI.update(user.id, {
+            name: user.name,
+            picture: user.picture || ''
+          });
+        }
+        console.log('✅ User already in MongoDB');
       }
     } catch (error) {
       console.error('❌ Error syncing user:', error);
@@ -166,48 +141,14 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 
   // Sync user on login
   useEffect(() => {
-    if (user && (!user.phone || !user.address || !user.createdAt)) {
-      console.log('🔄 User missing required fields, triggering sync...');
+    if (user && !user.phone) {
       syncUser();
     }
   }, [user, syncUser]);
 
-  // Initial data fetch on app load
-  useEffect(() => {
-    const initializeAuth = async () => {
-      try {
-        // Try to get user data from Google OAuth first
-        const savedGoogleUser = localStorage.getItem('sunride_google_user');
-        if (savedGoogleUser) {
-          const googleUserData = JSON.parse(savedGoogleUser);
-          console.log('🔄 Found Google user data, syncing to MongoDB...');
-          // Create user in MongoDB from Google data
-          const newUser = {
-            id: googleUserData.id,
-            name: googleUserData.name,
-            email: googleUserData.email,
-            picture: googleUserData.picture,
-            phone: '',
-            address: '',
-            isRider: false,
-            createdAt: new Date().toISOString()
-          };
-          await userAPI.create(newUser);
-          console.log('✅ New user created in MongoDB:', newUser);
-          setUser(newUser);
-          console.log('🔄 User data stored in MongoDB:', newUser);
-        }
-      } catch (error) {
-        console.error('❌ Error initializing auth:', error);
-      }
-    };
-    
-    initializeAuth();
-  }, []);
-
   const logout = useCallback(() => {
     setUser(null);
-    localStorage.removeItem('sunride_google_user');
+    localStorage.removeItem('sunride_user');
   }, []);
 
   const getAvatarUrl = useCallback(() => {

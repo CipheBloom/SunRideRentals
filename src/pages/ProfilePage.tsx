@@ -4,10 +4,10 @@ import { Mail, Phone, MapPin, Edit2, Camera, LogOut, Bike, Calendar, IndianRupee
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { useAuth } from '@/contexts/AuthContext';
-import { userAPI, bookingAPI, riderApplicationAPI, type BookingData, type RiderApplicationData } from '@/lib/api';
+import { bookingAPI, riderApplicationAPI, type BookingData, type RiderApplicationData } from '@/lib/api';
 
 export function ProfilePage() {
-  const { user, isAuthenticated, logout, getAvatarUrl } = useAuth();
+  const { user, isAuthenticated, logout, getAvatarUrl, updateUserProfile } = useAuth();
   const navigate = useNavigate();
   const [bookings, setBookings] = useState<BookingData[]>([]);
   const [riderApplication, setRiderApplication] = useState<RiderApplicationData | null>(null);
@@ -80,10 +80,7 @@ export function ProfilePage() {
     if (user) {
       setIsLoading(true);
       try {
-        await userAPI.update(user.id, {
-          phone,
-          address
-        });
+        await updateUserProfile({ phone, address });
         console.log('✅ Profile updated in MongoDB');
         setIsEditing(false);
       } catch (error) {

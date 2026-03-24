@@ -10,6 +10,7 @@ interface AuthContextType {
   logout: () => void;
   getAvatarUrl: () => string;
   syncUser: () => Promise<void>;
+  updateUserProfile: (profileData: { phone?: string; address?: string }) => Promise<void>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -81,6 +82,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
           };
           await userAPI.create(newUser);
           console.log('✅ New user created in MongoDB:', newUser);
+        
+          // Update local React state
           setUser(newUser);
           console.log('🔄 User data stored in MongoDB:', newUser);
         } else {
@@ -92,6 +95,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
             isRider: existingUser.isRider || false,
             riderApprovedAt: existingUser.riderApprovedAt
           };
+          // Update local React state
           setUser(mergedUser);
           console.log('✅ User data merged from MongoDB:', mergedUser);
           console.log('🔄 User data stored in MongoDB:', mergedUser);
@@ -106,6 +110,28 @@ export function AuthProvider({ children }: { children: ReactNode }) {
       console.error('Error decoding JWT:', error);
     }
   }, []);
+
+  const updateUserProfile = useCallback(async (profileData: { phone?: string; address?: string }) => {
+    if (!user) {
+      console.log('❌ No user to update');
+      return;
+    }
+    
+    try {
+      console.log('🔄 Updating user profile:', { id: user.id, ...profileData });
+      
+      // Update user in MongoDB
+      const updatedUser = await userAPI.update(user.id, profileData);
+      
+      // Update local React state with the new data
+      setUser(prev => prev ? { ...prev, ...profileData } : null);
+      
+      console.log('✅ User profile updated successfully:', updatedUser);
+    } catch (error) {
+      console.error('❌ Failed to update user profile:', error);
+      throw error;
+    }
+  }, [user]);
 
   const syncUser = useCallback(async () => {
     if (!user) {
@@ -141,9 +167,10 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         };
         await userAPI.create(newUser);
         console.log('✅ User created in MongoDB during sync:', newUser);
-        // User data is now stored in MongoDB, no localStorage needed
-        console.log('🔄 User data stored in MongoDB:', newUser);
+        
+        // Update local React state
         setUser(newUser);
+        console.log('🔄 User data stored in MongoDB:', newUser);
       } else {
         // Update existing user with latest data
         const updatedUser = {
@@ -155,6 +182,8 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         };
         await userAPI.update(user.id, updatedUser);
         console.log('✅ User data synced to MongoDB:', updatedUser);
+        
+        // Update local React state
         setUser(updatedUser);
         console.log('🔄 User data stored in MongoDB:', updatedUser);
       }
@@ -208,6 +237,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         logout,
         getAvatarUrl,
         syncUser,
+        updateUserProfile,
       }}
     >
       {children}

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { MobileScootyCard } from '@/components/MobileScootyCard';
+import { ScootyCard } from '@/components/ScootyCard';
 import { Button } from '@/components/ui/button';
 import { vehicleAPI, type VehicleData } from '@/lib/api';
 import { Zap, RefreshCw, Bike } from 'lucide-react';
@@ -127,10 +127,10 @@ export function ScootyPage() {
 
       {/* Product Grid */}
       <div className="px-4 py-6 pb-24">
-        <div className="grid grid-cols-2 gap-4">
+        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {displayModels.map((scooty, index) => (
-            <div key={scooty.id} className="animate-fadeInUp" style={{ animationDelay: `${index * 100}ms` }}>
-              <MobileScootyCard scooty={scooty} />
+            <div key={scooty.id} className={`group ${index % 2 === 1 ? '-rotate-1' : 'rotate-1'} animate-fadeInUp`} style={{ animationDelay: `${index * 0.15}s` }}>
+              <ScootyCard scooty={scooty} />
             </div>
           ))}
         </div>

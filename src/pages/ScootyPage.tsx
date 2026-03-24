@@ -1,15 +1,13 @@
 import { useState, useEffect } from 'react';
-import { ScootyCard } from '@/components/ScootyCard';
 import { MobileScootyCard } from '@/components/MobileScootyCard';
 import { Button } from '@/components/ui/button';
 import { vehicleAPI, type VehicleData } from '@/lib/api';
-import { Zap, Filter, RefreshCw, Bike, Star, Home, ShoppingCart, User } from 'lucide-react';
+import { Zap, RefreshCw, Bike, Home, ShoppingCart, User } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { useAuth } from '@/contexts/AuthContext';
 
 export function ScootyPage() {
-  const { isAuthenticated, user } = useAuth();
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
+  const { isAuthenticated } = useAuth();
   const [scooty, setScooty] = useState<VehicleData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
@@ -34,16 +32,13 @@ export function ScootyPage() {
     }
   };
 
-  const filteredscooty = selectedCategory === 'all' 
-    ? scooty 
-    : scooty.filter((s: VehicleData) => s.category === selectedCategory);
+  const filteredscooty = scooty;
 
   // Separate popular and new models
   const popularModels = filteredscooty.filter(s => s.rating && s.rating >= 4.5).slice(0, 6);
   const newModels = filteredscooty.filter(s => s.isNew || (s.year && s.year >= 2024)).slice(0, 6);
   const displayModels = activeTab === 'popular' ? popularModels : newModels;
 
-  const categories = ['all', ...new Set(scooty.map((s: VehicleData) => s.category))];
 
   if (loading) {
     return (

@@ -116,8 +116,17 @@ export function ProfilePage() {
     navigate('/');
   };
 
-  const totalSpent = bookings.filter(b => b.status !== 'cancelled').reduce((sum, b) => sum + (b.totalPrice || 0), 0);
+  const totalSpent = bookings
+    .filter(booking => booking.status !== 'cancelled')
+    .reduce((sum, booking) => sum + (booking.totalPrice || 0), 0);
+  
   const activeBookings = bookings.filter(b => b.status === 'confirmed').length;
+  
+  // Debug logging for total spent calculation
+  console.log('💰 Total Spent Calculation:');
+  console.log('📋 All bookings:', bookings.map(b => ({ id: b.id, status: b.status, price: b.totalPrice })));
+  console.log('✅ Active bookings (not cancelled):', bookings.filter(b => b.status !== 'cancelled').map(b => ({ id: b.id, status: b.status, price: b.totalPrice })));
+  console.log('💰 Final total spent:', totalSpent);
 
   return (
     <div className="min-h-screen bg-blue-100 py-8 px-4 md:px-6">

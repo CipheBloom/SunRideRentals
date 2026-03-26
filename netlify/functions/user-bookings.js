@@ -77,6 +77,19 @@ exports.handler = async (event, context) => {
     }
     
     console.log('🔍 User ID extracted:', userId);
+    console.log('🔍 Event path:', event.path);
+    
+    if (!userId) {
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: 'User ID is required' }),
+      };
+    }
+    
+    console.log('🔍 Querying bookings for userId:', userId);
+    const bookings = await Booking.find({ userId: userId }).lean();
+    console.log('🔍 Found bookings count:', bookings.length);
     console.log('🔍 Full event path:', event.path);
     console.log('🔍 Path parameters:', event.pathParameters);
     

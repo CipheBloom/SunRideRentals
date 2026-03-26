@@ -331,7 +331,7 @@ export function ProfilePage() {
               </div>
             ) : (
               <div className="space-y-3">
-                {bookings.slice(0, 3).map((booking) => {
+                {bookings.map((booking) => {
                   const canCancel = booking.status === 'confirmed' || booking.status === 'pending';
                   return (
                     <div key={booking.id} className="flex items-center gap-4 p-3 bg-white border-4 border-black shadow-[4px_4px_0px_0px_rgba(0,0,0,1)]">

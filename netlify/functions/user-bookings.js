@@ -168,9 +168,16 @@ exports.handler = async (event, context) => {
     // Get bookings for specific user from MongoDB
     console.log('🔍 Querying bookings for userId:', userId);
     console.log('🔍 dbConnected status:', dbConnected);
-    console.log('🔍 FUNCTION VERSION: 2.0 - FIXED VERSION');
+    console.log('🔍 FUNCTION VERSION: 2.1 - ENHANCED DEBUGGING');
     
+    if (!dbConnected) {
+      console.log('🔍 Using mock data - MongoDB not connected');
+    }
+    
+    console.log('🔍 About to execute MongoDB query...');
     const userBookings = await Booking.find({ userId: userId }).lean();
+    console.log('🔍 MongoDB query executed, results:', userBookings.length);
+    console.log('🔍 First booking userId check:', userBookings[0]?.userId);
     
     return {
       statusCode: 200,

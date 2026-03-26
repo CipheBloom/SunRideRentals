@@ -1,17 +1,19 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { 
   Bike, 
   MapPin, 
-  Phone, 
-  User, 
-  Clock, 
-  FileText,
-  CheckCircle,
-  AlertCircle,
-  ArrowLeft,
+  Phone,
+  Calendar,
   CreditCard,
-  IdCard
+  Shield,
+  CheckCircle,
+  ArrowLeft,
+  User,
+  AlertCircle,
+  IdCard,
+  Clock,
+  FileText
 } from 'lucide-react';
 import { Card, CardContent, CardHeader, CardTitle, CardDescription } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -24,10 +26,38 @@ import { riderApplicationAPI } from '@/lib/api';
 
 export function RiderApplicationPage() {
   const navigate = useNavigate();
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, syncUser } = useAuth();
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [isCheckingRiderStatus, setIsCheckingRiderStatus] = useState(true);
+
+  // Check rider status and redirect if needed
+  useEffect(() => {
+    const checkRiderStatus = async () => {
+      if (!isAuthenticated || !user) {
+        setIsCheckingRiderStatus(false);
+        return;
+      }
+
+      try {
+        // Force sync to get latest user data
+        await syncUser();
+        
+        // Check again after sync
+        if (user?.isRider) {
+          navigate('/already-rider');
+          return;
+        }
+      } catch (error) {
+        console.error('Error checking rider status:', error);
+      } finally {
+        setIsCheckingRiderStatus(false);
+      }
+    };
+
+    checkRiderStatus();
+  }, [isAuthenticated, user, navigate, syncUser]);
 
   const [formData, setFormData] = useState({
     fullName: '',
@@ -119,15 +149,25 @@ export function RiderApplicationPage() {
   }
 
   // Check if user is already a rider and redirect them
-  console.log('🔍 Rider Application Page - User check:', {
-    isAuthenticated,
-    userId: user?.id,
-    isRider: user?.isRider,
-    userName: user?.name
-  });
-  
+  if (isCheckingRiderStatus) {
+    return (
+      <div className="min-h-screen bg-blue-100 py-12 px-4 flex items-center justify-center">
+        <div className="max-w-md mx-auto w-full">
+          <Card className="border-4 border-black shadow-[8px_8px_0px_0px_rgba(0,0,0,1)]">
+            <CardContent className="text-center py-8">
+              <div className="w-16 h-16 border-4 border-black bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 animate-spin">
+                <Bike className="w-8 h-8 text-black" />
+              </div>
+              <h3 className="text-lg font-black text-black mb-2">Checking Rider Status...</h3>
+              <p className="text-black font-medium">Please wait while we verify your account.</p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    );
+  }
+
   if (isAuthenticated && user?.isRider) {
-    console.log('🔄 User is already a rider, redirecting to already-rider page...');
     // Redirect to dedicated page for existing riders
     navigate('/already-rider');
     return null;

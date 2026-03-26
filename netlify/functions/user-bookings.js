@@ -153,7 +153,17 @@ exports.handler = async (event, context) => {
     }
     
     // Get bookings for specific user from MongoDB
-    const bookings = await Booking.find({ userId }).lean();
+    if (!userId) {
+      console.log('❌ No userId provided for user-bookings');
+      return {
+        statusCode: 400,
+        headers,
+        body: JSON.stringify({ error: 'User ID is required' }),
+      };
+    }
+    
+    console.log('🔍 Querying bookings for userId:', userId);
+    const bookings = await Booking.find({ userId: userId }).lean();
     
     return {
       statusCode: 200,
